@@ -1,0 +1,61 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+#include "CCD.H"
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//初始化CCD
+CCD::CCD()
+{
+	createWindow();	//创建CCD相关窗口
+
+	createImageCCD();	//创建CCD拍摄的图像
+
+	initializeICC();	//初始化ICC
+}
+
+//创建CCD相关窗口
+void CCD::createWindow()
+{
+	cvNamedWindow("Image_CCD");
+}
+
+//创建CCD拍摄的图像
+void CCD::createImageCCD()
+{
+	imageCCD = cvCreateImageHeader(cvSize(768, 576), IPL_DEPTH_8U, 1);
+}
+
+//初始化ICC
+void CCD::initializeICC()
+{
+	hcg = NULL;
+	status = CG_OK;
+
+	status = BeginCGCard(1, &hcg);
+
+	CG_VERIFY(status);
+
+	CGSetVideoStandard(hcg, PAL);	//设置视频制式
+	CGSetScanMode(hcg, FRAME);	//设置扫描模式
+	CGSelectCryOSC(hcg, CRY_OSC_35M);	//设置晶振
+	CGSetVideoFormat(hcg, ALL8BIT);	//设置视频格式
+
+	VIDEO_SOURCE source;
+
+	source.type = COMPOSITE_VIDEO;
+	source.nIndex = 0;
+
+	CGSetVideoSource(hcg, source);	//设置视频源路
+	CGSetInputWindow(hcg, 0, 0, 768, 576);	//设置视频输入窗口
+	CGSetOutputWindow(hcg, 0, 0, 768, 576);	//设置视频输出窗口
+
+	pImageBuffer = new BYTE[768 * 576];
+	pStaticBuffer = NULL;
+	handle = NULL;
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
