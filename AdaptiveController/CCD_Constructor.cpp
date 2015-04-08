@@ -1,34 +1,41 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ *
+ */
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "CCD.H"
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//初始化CCD
+
+
+
 CCD::CCD()
 {
-	createWindow();	//创建CCD相关窗口
+	createWindow();
 
-	createImageCCD();	//创建CCD拍摄的图像
+	createImageCCD();
 
-	initializeICC();	//初始化ICC
+	initializeICC();
 }
 
-//创建CCD相关窗口
+
+
 void CCD::createWindow()
 {
 	cvNamedWindow("Image_CCD");
 }
 
-//创建CCD拍摄的图像
+
+
 void CCD::createImageCCD()
 {
 	imageCCD = cvCreateImageHeader(cvSize(768, 576), IPL_DEPTH_8U, 1);
 }
 
-//初始化ICC
+
+
 void CCD::initializeICC()
 {
 	hcg = NULL;
@@ -38,19 +45,19 @@ void CCD::initializeICC()
 
 	CG_VERIFY(status);
 
-	CGSetVideoStandard(hcg, PAL);	//设置视频制式
-	CGSetScanMode(hcg, FRAME);	//设置扫描模式
-	CGSelectCryOSC(hcg, CRY_OSC_35M);	//设置晶振
-	CGSetVideoFormat(hcg, ALL8BIT);	//设置视频格式
+	CGSetVideoStandard(hcg, PAL);
+	CGSetScanMode(hcg, FRAME);
+	CGSelectCryOSC(hcg, CRY_OSC_35M);
+	CGSetVideoFormat(hcg, ALL8BIT);
 
 	VIDEO_SOURCE source;
 
 	source.type = COMPOSITE_VIDEO;
 	source.nIndex = 0;
 
-	CGSetVideoSource(hcg, source);	//设置视频源路
-	CGSetInputWindow(hcg, 0, 0, 768, 576);	//设置视频输入窗口
-	CGSetOutputWindow(hcg, 0, 0, 768, 576);	//设置视频输出窗口
+	CGSetVideoSource(hcg, source);
+	CGSetInputWindow(hcg, 0, 0, 768, 576);
+	CGSetOutputWindow(hcg, 0, 0, 768, 576);
 
 	pImageBuffer = new BYTE[768 * 576];
 	pStaticBuffer = NULL;

@@ -6,13 +6,30 @@
 --------------------Configuration: AdaptiveController - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\wy\AppData\Local\Temp\RSP2392.tmp" with contents
+Creating temporary file "C:\Users\wy\AppData\Local\Temp\RSP5A5.tmp" with contents
 [
-/nologo /MLd /W3 /Gm /GX /ZI /Od /I "ICC" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/AdaptiveController.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ  /c 
+/nologo /MLd /W3 /Gm /GX /ZI /Od /I "ICC" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/AdaptiveController.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\AdaptiveController.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\CCD_Constructor.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\CCD_Destructor.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\CCD_Interface.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\CCD_Utility.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\ImageProcessing_Constructor.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\ImageProcessing_Destructor.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\ImageProcessing_Interface.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\ImageProcessing_Utility.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\SimulatedAnnealing_Constructor.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\SimulatedAnnealing_Destructor.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\SimulatedAnnealing_Interface.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\SimulatedAnnealing_Utility.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\SLM_Constructor.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\SLM_Destructor.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\SLM_Interface.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\SLM_Utility.cpp"
 "D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\Test.cpp"
 ]
-Creating command line "cl.exe @C:\Users\wy\AppData\Local\Temp\RSP2392.tmp" 
-Creating temporary file "C:\Users\wy\AppData\Local\Temp\RSP2393.tmp" with contents
+Creating command line "cl.exe @C:\Users\wy\AppData\Local\Temp\RSP5A5.tmp" 
+Creating temporary file "C:\Users\wy\AppData\Local\Temp\RSP5A6.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib cxcore.lib cv.lib ml.lib cvaux.lib highgui.lib cvcam.lib CGVideo.lib CGVidEx.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/AdaptiveController.pdb" /debug /machine:I386 /out:"Debug/AdaptiveController.exe" /pdbtype:sept /libpath:"ICC" 
 .\Debug\AdaptiveController.obj
@@ -34,9 +51,122 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Debug\SLM_Utility.obj
 .\Debug\Test.obj
 ]
-Creating command line "link.exe @C:\Users\wy\AppData\Local\Temp\RSP2393.tmp"
+Creating command line "link.exe @C:\Users\wy\AppData\Local\Temp\RSP5A6.tmp"
 <h3>Output Window</h3>
 Compiling...
+AdaptiveController.cpp
+CCD_Constructor.cpp
+CCD_Destructor.cpp
+CCD_Interface.cpp
+CCD_Utility.cpp
+ImageProcessing_Constructor.cpp
+ImageProcessing_Destructor.cpp
+ImageProcessing_Interface.cpp
+ImageProcessing_Utility.cpp
+SimulatedAnnealing_Constructor.cpp
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+SimulatedAnnealing_Destructor.cpp
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+SimulatedAnnealing_Interface.cpp
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+SimulatedAnnealing_Utility.cpp
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+SLM_Constructor.cpp
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+SLM_Destructor.cpp
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+SLM_Interface.cpp
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
+SLM_Utility.cpp
+
+NOTE: WINVER has been defined as 0x0500 or greater which enables
+Windows NT 5.0 and Windows 98 features. When these headers were released,
+Windows NT 5.0 beta 1 and Windows 98 beta 2.1 were the current versions.
+
+For this release when WINVER is defined as 0x0500 or greater, you can only
+build beta or test applications.  To build a retail application,
+set WINVER to 0x0400 or visit http://www.microsoft.com/msdn/sdk
+to see if retail Windows NT 5.0 or Windows 98 headers are available.
+
+See the SDK release notes for more information.
+
 Test.cpp
 
 NOTE: WINVER has been defined as 0x0500 or greater which enables

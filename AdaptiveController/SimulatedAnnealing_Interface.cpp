@@ -1,39 +1,33 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ *
+ */
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "SimulatedAnnealing.h"
 
 #include <iostream>
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 using namespace std;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 void SimulatedAnnealing::setModeIdeal(char *name, int margin)
 {
-	setRangeSpot(margin);	//设置CCD的光斑范围
-							/*
-							 *	参数(int margin)为边距大小
-							 */
+	setRangeSpot(margin);
 
-	createImageIdeal(name, margin);	//创建理想的目标图像
-								/*
-								 *	参数(int margin)为边距大小
-								 */
+	createImageIdeal(name, margin);
 
-	showImage();	//显示理想的目标图像
+	showImage();
 }
 
-//设置SA的参数
-/*
- *	参数(double TsSA)为设置起始温度的值
- *	参数(double TtSA)为设置终止温度的值
- *	参数(double cSA)为设置降温幅度的值
- *	参数(int cycSA)为设置循环次数的值
- */
+
+
 void SimulatedAnnealing::setParameterSA(double TsSA, double TtSA, double cSA, int cycSA)
 {
 	Ts = TsSA;
@@ -61,7 +55,8 @@ void SimulatedAnnealing::setParameterSA(double TsSA, double TtSA, double cSA, in
 	cout << endl;
 }
 
-//执行SA
+
+
 void SimulatedAnnealing::run(int height, int width)
 {
 	int x, y;
@@ -128,7 +123,8 @@ void SimulatedAnnealing::run(int height, int width)
 	cout << correlation << endl;
 }
 
-//计算相关度
+
+
 double SimulatedAnnealing::getCorrelation()
 {
 	int cdIdeal, cdCurrent;

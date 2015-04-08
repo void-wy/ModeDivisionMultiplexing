@@ -1,5 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ *
+ */
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "SimulatedAnnealing.h"
 
@@ -8,17 +12,14 @@
 #include <string>
 #include <iostream>
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 using namespace std;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//设置CCD的光斑范围
-/*
- *	参数(int margin)为边距大小
- */
+
+
+
 void SimulatedAnnealing::setRangeSpot(int margin)
 {
 	int left, right, top, bottom;
@@ -26,11 +27,7 @@ void SimulatedAnnealing::setRangeSpot(int margin)
 	//Test
 	imageCurrent = cvLoadImage("CCD_Test.jpg", CV_LOAD_IMAGE_GRAYSCALE);
 
-	IP->findContour(imageCurrent, left, right, top, bottom);	//得到指定图像中的光斑轮廓
-															/*
-															 *	参数(IplImage * &image)为得到光斑轮廓的图像
-															 *	参数(int &left, int &right, int &top, int &bottom)为轮廓的最左点、最右点、最上点和最下点
-															 */
+	IP->findContour(imageCurrent, left, right, top, bottom);
 
 	leftSpot = left - margin;
 	bottomSpot = bottom - margin;
@@ -45,10 +42,8 @@ void SimulatedAnnealing::setRangeSpot(int margin)
 	cout << endl;
 }
 
-//创建理想的目标图像
-/*
- *	参数(int margin)为边距大小
- */
+
+
 void SimulatedAnnealing::createImageIdeal(char *name, int margin)
 {
 	int left, right, top, bottom;
@@ -59,11 +54,7 @@ void SimulatedAnnealing::createImageIdeal(char *name, int margin)
 
 	IplImage *imageOriginalIdeal = cvLoadImage(path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 
-	IP->findContour(imageOriginalIdeal, left, right, top, bottom);	//得到指定图像中的光斑轮廓
-																/*
-																 *	参数(IplImage * &image)为得到光斑轮廓的图像
-																 *	参数(int &left, int &right, int &top, int &bottom)为轮廓的最左点、最右点、最上点和最下点
-																 */
+	IP->findContour(imageOriginalIdeal, left, right, top, bottom);
 
 	int width = ((double)(widthSpot - 2 * margin) / (right - left)) * imageOriginalIdeal->width;
 	int height = ((double)(heightSpot - 2 * margin) / (top - bottom)) * imageOriginalIdeal->height;
@@ -72,11 +63,7 @@ void SimulatedAnnealing::createImageIdeal(char *name, int margin)
 
 	cvResize(imageOriginalIdeal, imageOriginalResize);
 
-	IP->findContour(imageOriginalResize, left, right, top, bottom);	//得到指定图像中的光斑轮廓
-																/*
-																 *	参数(IplImage * &image)为得到光斑轮廓的图像
-																 *	参数(int &left, int &right, int &top, int &bottom)为轮廓的最左点、最右点、最上点和最下点
-																 */
+	IP->findContour(imageOriginalResize, left, right, top, bottom);
 
 	imageIdeal = cvCreateImage(cvSize(widthSpot, heightSpot), IPL_DEPTH_8U, 1);
 
@@ -92,7 +79,8 @@ void SimulatedAnnealing::createImageIdeal(char *name, int margin)
 	cvReleaseImage(&imageOriginalResize);
 }
 
-//显示理想的目标图像
+
+
 void SimulatedAnnealing::showImage()
 {
 	cvShowImage("Image_Ideal", imageIdeal);

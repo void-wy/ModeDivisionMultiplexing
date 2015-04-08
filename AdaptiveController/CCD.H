@@ -1,5 +1,9 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ *
+ */
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef HIGHGUI_H
 #define HIGHGUI_H
@@ -8,7 +12,7 @@
 
 #endif
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 #ifndef CGVIDEO_H
 #define CGVIDEO_H
@@ -17,54 +21,82 @@
 
 #endif
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
 
 #ifndef CCD_C
 #define CCD_C
 
 class CCD
 {
-private:
-	IplImage *imageCCD;	//CCD拍摄的图像
+
+/*
+ *	Data members
+ */
 
 private:
-	CGSTATUS status;	//函数执行状态
-	HCG hcg;	//图像卡句柄
-	BYTE *pImageBuffer;	//采集图像缓冲区
-	BYTE *pStaticBuffer;	//静态内存地址指针
-	HANDLE handle;	//静态内存描述句柄
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
-public:
-	CCD();	//初始化CCD
+	IplImage *imageCCD;
 
 private:
-	void createWindow();	//创建CCD相关窗口
-	void createImageCCD();	//创建CCD拍摄的图像
-	void initializeICC();	//初始化ICC
+	CGSTATUS status;
+	HCG hcg;
+	BYTE *pImageBuffer;
+	BYTE *pStaticBuffer;
+	HANDLE handle;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
-public:
-	IplImage * getImageCCD();	//返回CCD拍摄的图像
 
-public:
-	void snapShot();	//采集一帧图像
-
-public:
-	void showImage();	//显示CCD拍摄的图像
-
-///////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ *	Constructor
+ */
 
 public:
-	~CCD();	//关闭CCD
+	CCD();
 
 private:
-	void finalizeICC();	//关闭ICC
-	void destroyWindow();	//销毁CCD相关窗口
-	void releaseImage();	//释放CCD相关图像资源
+	void createWindow();
+
+	void createImageCCD();
+
+	void initializeICC();
+
+
+
+/*
+ *	Interface
+ */
+
+public:
+	IplImage * getImageCCD();
+
+public:
+	void snapShot();
+
+public:
+	void showImage();
+
+
+
+/*
+ *	Utility
+ */
+
+
+
+/*
+ *	Destructor
+ */
+
+public:
+	~CCD();
+
+private:
+	void finalizeICC();
+
+	void destroyWindow();
+
+	void releaseImage();
 };
 
 #endif

@@ -1,56 +1,54 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ *
+ */
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "SLM.H"
 
 #include <iostream>
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 using namespace std;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//初始化SLM
-/*
- *	参数(int height, int width)为SLM调相范围的高度和宽度
- */
+
+
+
 SLM::SLM(int height, int width)
 {
-	createWindow();	//创建SLM相关窗口
+	createWindow();
 
-	createImageSLM();	//创建SLM上加载的相位图像
+	createImageSLM();
 
-	setRangePM(height, width);	//设置SLM的调相范围
-								/*
-								 *	参数(int height, int width)为调相范围的高度和宽度
-								 */
+	setRangePM(height, width);
 
-	createImageVisible();	//创建观察SLM上加载相位的图像
+	createImageVisible();
 
-	initializePhase();	//初始化SLM上的相位图为零
+	initializePhase();
 
-	showImage();	//显示SLM相关图像
+	showImage();
 }
 
-//创建SLM相关窗口
+
+
 void SLM::createWindow()
 {
 	cvNamedWindow("Image_SLM", 0);
 	cvNamedWindow("Image_Visible");
 }
 
-//创建SLM上加载的相位图像
+
+
 void SLM::createImageSLM()
 {
-	EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, (LPARAM)this);	//遍历显示设备
+	EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, (LPARAM)this);
 }
 
-//设置SLM的调相范围
-/*
- *	参数(int height, int width)为调相范围的高度和宽度
- */
+
+
 void SLM::setRangePM(int height, int width)
 {
 	leftPM = imageSLM->width / 2 - width / 2;
@@ -66,13 +64,15 @@ void SLM::setRangePM(int height, int width)
 	cout << endl;
 }
 
-//创建观察SLM上加载相位的图像
+
+
 void SLM::createImageVisible()
 {
 	imageVisible = cvCreateImage(cvSize(widthPM, heightPM), IPL_DEPTH_8U, 1);
 }
 
-//初始化SLM上的相位图为零
+
+
 void SLM::initializePhase()
 {
 	int i, j;
@@ -94,7 +94,9 @@ void SLM::initializePhase()
 	}
 }
 
-//EnumDisplayMonitors的回调函数
+
+
+//	A callback function that is called by the EnumDisplayMonitors function.
 BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData)
 {
 	HWND hwnd = ::GetParent((HWND)cvGetWindowHandle("Image_SLM"));
