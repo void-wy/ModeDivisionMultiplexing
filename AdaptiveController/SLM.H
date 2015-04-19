@@ -23,6 +23,15 @@
 
 
 
+#ifndef	STRING_H
+#define	STRING_H
+
+#include <string>
+
+#endif
+
+
+
 
 
 #ifndef SLM_C
@@ -38,6 +47,7 @@ class SLM
 private:
 	IplImage *imageSLM;
 	IplImage *imageVisible;
+	IplImage *imageDesired;
 
 private:
 	int leftPM;
@@ -63,6 +73,8 @@ private:
 
 	void createImageVisible();
 
+	void createImageDesired();
+
 	void initializePhase();
 
 	//	A callback function that is called by the EnumDisplayMonitors function.
@@ -81,10 +93,22 @@ public:
 	int getPhase(int x, int y);
 
 public:
+	void setPhase(std::string name = "Blank", std::string path = "Phase");
+
+public:
 	void setPhase(int x, int y, int value, int height = 1, int width = 1);
 
 public:
-	void showImage();
+	void loadPhase();
+
+public:
+	void showImageVisible();
+
+public:
+	void updateImageDesired();
+
+public:
+	void saveImageDesired(std::string name = "SLM_Image_Desired", std::string path = "Output");
 
 
 

@@ -91,19 +91,19 @@ SOURCE=.\AdaptiveController.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CCD_Constructor.cpp
+SOURCE=.\FakeCCD_Constructor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CCD_Destructor.cpp
+SOURCE=.\FakeCCD_Destructor.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CCD_Interface.cpp
+SOURCE=.\FakeCCD_Interface.cpp
 # End Source File
 # Begin Source File
 
-SOURCE=.\CCD_Utility.cpp
+SOURCE=.\FakeCCD_Utility.cpp
 # End Source File
 # Begin Source File
 
@@ -120,6 +120,22 @@ SOURCE=.\ImageProcessing_Interface.cpp
 # Begin Source File
 
 SOURCE=.\ImageProcessing_Utility.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RealCCD_Constructor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RealCCD_Destructor.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RealCCD_Interface.cpp
+# End Source File
+# Begin Source File
+
+SOURCE=.\RealCCD_Utility.cpp
 # End Source File
 # Begin Source File
 
@@ -163,11 +179,15 @@ SOURCE=.\Test.cpp
 # PROP Default_Filter "h;hpp;hxx;hm;inl"
 # Begin Source File
 
-SOURCE=.\CCD.H
+SOURCE=.\FakeCCD.h
 # End Source File
 # Begin Source File
 
 SOURCE=.\ImageProcessing.h
+# End Source File
+# Begin Source File
+
+SOURCE=.\RealCCD.h
 # End Source File
 # Begin Source File
 

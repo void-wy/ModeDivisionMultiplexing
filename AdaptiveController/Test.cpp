@@ -14,17 +14,32 @@
 void main()
 {
 	SLM *slm = new SLM(400, 400);
-	//CCD *ccd = new CCD();
-	ImageProcessing *IP = new ImageProcessing();
-	SimulatedAnnealing *SA = new SimulatedAnnealing(slm/*, ccd*/, IP);
 
-	SA->setModeIdeal("11a", 15);
+	//CCD *ccd = new CCD();
+
+	FakeCCD *ccd = new FakeCCD();
+
+	ImageProcessing *IP = new ImageProcessing();
+
+	SimulatedAnnealing *SA = new SimulatedAnnealing(slm, ccd, IP);
+
+
+
+	SA->setModeIdeal(15, "11a");
+
+	SA->setPhaseInitial("01-11a");
+
 	SA->setParameterSA(10000000, 100, 0.95, 100);
+
 	SA->run(200, 200);
+
+	SA->saveResult();
+
+
 
 	delete SA;
 	delete IP;
-	//delete ccd;
+	delete ccd;
 	delete slm;
 }
 

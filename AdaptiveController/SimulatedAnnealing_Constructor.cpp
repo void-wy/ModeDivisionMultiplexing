@@ -7,22 +7,20 @@
 
 #include "SimulatedAnnealing.h"
 
-#include <time.h>
 
 
 
 
-
-SimulatedAnnealing::SimulatedAnnealing(SLM *slmSA/*, CCD *ccdSA*/, ImageProcessing *IP_SA)
+SimulatedAnnealing::SimulatedAnnealing(SLM *slm, /*Test*/ FakeCCD *ccd, ImageProcessing *IP)
 {
-	connectHardware(slmSA/*, ccdSA*/);
+	connectHardware(slm, ccd);
 
-	includeIP(IP_SA);
+	includeIP(IP);
 
-	//getImageCurrent();
+	getImageCurrent();
 
-	//ccd->snapShot();
-	//ccd->showImage();
+	ccd->snapShot();
+	ccd->showImageCCD();
 
 	setRangePM();
 
@@ -33,17 +31,17 @@ SimulatedAnnealing::SimulatedAnnealing(SLM *slmSA/*, CCD *ccdSA*/, ImageProcessi
 
 
 
-void SimulatedAnnealing::connectHardware(SLM *slmSA/*, CCD *ccdSA*/)
+void SimulatedAnnealing::connectHardware(SLM *slm, /*Test*/ FakeCCD *ccd)
 {
-	slm = slmSA;
-	//ccd = ccdSA;
+	this->slm = slm;
+	this->ccd = ccd;
 }
 
 
 
-void SimulatedAnnealing::includeIP(ImageProcessing *IP_SA)
+void SimulatedAnnealing::includeIP(ImageProcessing *IP)
 {
-	IP = IP_SA;
+	this->IP = IP;
 }
 
 

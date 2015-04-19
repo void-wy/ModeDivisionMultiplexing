@@ -9,12 +9,7 @@
 
 #include "cv.h"
 
-#include <string>
 #include <iostream>
-
-
-
-using namespace std;
 
 
 
@@ -24,9 +19,6 @@ void SimulatedAnnealing::setRangeSpot(int margin)
 {
 	int left, right, top, bottom;
 
-	//Test
-	imageCurrent = cvLoadImage("CCD_Test.jpg", CV_LOAD_IMAGE_GRAYSCALE);
-
 	IP->findContour(imageCurrent, left, right, top, bottom);
 
 	leftSpot = left - margin;
@@ -34,23 +26,21 @@ void SimulatedAnnealing::setRangeSpot(int margin)
 	heightSpot = top - bottom + 2 * margin;
 	widthSpot = right - left + 2 * margin;
 
-	cout << "leftSpot : " << leftSpot << endl;
-	cout << "bottomSpot : " << bottomSpot << endl;
-	cout << "heightSpot : " << heightSpot << endl;
-	cout << "widthSpot : " << widthSpot << endl;
+	std::cout << "leftSpot : " << leftSpot << std::endl;
+	std::cout << "bottomSpot : " << bottomSpot << std::endl;
+	std::cout << "heightSpot : " << heightSpot << std::endl;
+	std::cout << "widthSpot : " << widthSpot << std::endl;
 
-	cout << endl;
+	std::cout << std::endl;
 }
 
 
 
-void SimulatedAnnealing::createImageIdeal(char *name, int margin)
+void SimulatedAnnealing::createImageIdeal(int margin, std::string name, std::string path)
 {
 	int left, right, top, bottom;
 
-	string path = name;
-
-	path = "LP\\" + path + ".jpg";
+	path = path + "\\" + name + ".bmp";
 
 	IplImage *imageOriginalIdeal = cvLoadImage(path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 
@@ -81,11 +71,11 @@ void SimulatedAnnealing::createImageIdeal(char *name, int margin)
 
 
 
-void SimulatedAnnealing::showImage()
+void SimulatedAnnealing::showImageIdeal()
 {
 	cvShowImage("Image_Ideal", imageIdeal);
 
-	cvWaitKey(1);
+	cvWaitKey(20);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -11,48 +11,55 @@
 
 
 
-using namespace std;
 
 
-
-
-
-void SimulatedAnnealing::setModeIdeal(char *name, int margin)
+void SimulatedAnnealing::setModeIdeal(int margin, std::string name, std::string path)
 {
 	setRangeSpot(margin);
 
-	createImageIdeal(name, margin);
+	createImageIdeal(margin, name, path);
 
-	showImage();
+	showImageIdeal();
 }
 
 
 
-void SimulatedAnnealing::setParameterSA(double TsSA, double TtSA, double cSA, int cycSA)
+void SimulatedAnnealing::setPhaseInitial(std::string name, std::string path)
 {
-	Ts = TsSA;
-	Tt = TtSA;
-	c = cSA;
-	cyc = cycSA;
+	slm->setPhase(name, path);
+
+	slm->loadPhase();
+
+	slm->showImageVisible();
+}
+
+
+
+void SimulatedAnnealing::setParameterSA(double Ts, double Tt, double c, int cyc)
+{
+	this->Ts = Ts;
+	this->Tt = Tt;
+	this->c = c;
+	this->cyc = cyc;
 	BoltzmannConstant = 1.3806488e-23;
 
-	correlation = 0;
+	correlationBest = 0;
 	DRN = 0;
 	PRN = 0;
 	TN = 0;
 
-	cout << "Ts : " << Ts << endl;
-	cout << "Tt : " << Tt << endl;
-	cout << "c : " << c << endl;
-	cout << "cyc : " << cyc << endl;
-	cout << "BoltzmannConstant : " << BoltzmannConstant << endl;
+	std::cout << "Ts : " << this->Ts << std::endl;
+	std::cout << "Tt : " << this->Tt << std::endl;
+	std::cout << "c : " << this->c << std::endl;
+	std::cout << "cyc : " << this->cyc << std::endl;
+	std::cout << "BoltzmannConstant : " << BoltzmannConstant << std::endl;
 
-	cout << "correlation : " << correlation << endl;
-	cout << "DRN : " << DRN << endl;
-	cout << "PRN : " << PRN << endl;
-	cout << "TN : " << TN << endl;
+	std::cout << "correlationBest : " << correlationBest << std::endl;
+	std::cout << "DRN : " << DRN << std::endl;
+	std::cout << "PRN : " << PRN << std::endl;
+	std::cout << "TN : " << TN << std::endl;
 
-	cout << endl;
+	std::cout << std::endl;
 }
 
 
@@ -60,15 +67,13 @@ void SimulatedAnnealing::setParameterSA(double TsSA, double TtSA, double cSA, in
 void SimulatedAnnealing::run(int height, int width)
 {
 	int x, y;
+	double correlation = 0;
 	double tempCorrelation;
 
-	while(1)
-	{
-		if(100 == TN)
-		{
-			break;
-		}
+	startClock();
 
+	while(TRUE)
+	{
 		if(Ts > Tt)
 		{
 			for(int i = 0; i < cyc; i++)
@@ -77,10 +82,26 @@ void SimulatedAnnealing::run(int height, int width)
 				y = (rand() % (widthPM / width)) * width;
 
 				slm->setPhase(x, y, 127^slm->getPhase(x, y), height, width);
-				slm->showImage();
 
-				//ccd->snapShot();
-				//ccd->showImage();
+				slm->loadPhase();
+
+				if(correlation > correlationBest)
+				{
+					correlationBest = correlation;
+
+					std::cout << "Correlation : \t" << correlationBest << std::endl;
+
+					ccd->showImageCCD();
+
+					ccd->updateImageDesired();
+				}
+
+				if(27 == cvWaitKey(1))
+				{
+					return;
+				}
+
+				ccd->snapShot();
 
 				tempCorrelation = getCorrelation();
 
@@ -91,7 +112,12 @@ void SimulatedAnnealing::run(int height, int width)
 				{
 					correlation = tempCorrelation;
 
-					cout << tempCorrelation << endl;
+					if(correlation > correlationBest)
+					{
+						slm->showImageVisible();
+
+						slm->updateImageDesired();
+					}
 
 					//DRN
 					DRN += 1;
@@ -116,11 +142,6 @@ void SimulatedAnnealing::run(int height, int width)
 			break;
 		}
 	}
-
-	cout << "TN : " << TN << endl;
-	cout << "DRN : " << DRN << endl;
-	cout << "PRN : " << PRN << endl;
-	cout << correlation << endl;
 }
 
 
@@ -145,6 +166,41 @@ double SimulatedAnnealing::getCorrelation()
 	}
 
 	return (sumNumerator * sumNumerator) / (sumDenominator1 * sumDenominator2);
+}
+
+
+
+void SimulatedAnnealing::saveResult(std::string nameSLM, std::string nameCCD, std::string nameSA, std::string path)
+{
+	finishClock();
+
+	slm->saveImageDesired(nameSLM, path);
+
+	ccd->saveImageDesired(nameCCD, path);
+
+	std::cout << "TN : \t" << TN << std::endl;
+	std::cout << "DRN : \t" << DRN << std::endl;
+	std::cout << "PRN : \t" << PRN << std::endl;
+	std::cout << "CorrelationBest : \t" << correlationBest << std::endl;
+	std::cout << "Duration : \t" << duration << std::endl;
+}
+
+
+
+void SimulatedAnnealing::startClock()
+{
+	start = clock();
+}
+
+
+
+double SimulatedAnnealing::finishClock()
+{
+	finish = clock();
+
+	duration = (double)(finish - start) / CLOCKS_PER_SEC;
+
+	return duration;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -7,6 +7,8 @@
 
 #include "SLM.H"
 
+#include "cv.h"
+
 
 
 
@@ -26,6 +28,30 @@ int SLM::getPhase(int x, int y)
 
 
 
+void SLM::setPhase(std::string name, std::string path)
+{
+	path = path + "\\" + name + ".jpg";
+
+	IplImage *temp = cvLoadImage(path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+
+	cvResize(temp, imageSLM);
+
+	cvReleaseImage(&temp);
+
+	for(int i = 0; i < imageVisible->height; i++)
+	{
+		for(int j = 0; j < imageVisible->width; j++)
+		{
+			((uchar *)imageVisible->imageData)[i * imageVisible->widthStep + j] =
+				((uchar *)imageSLM->imageData)[(bottomPM + i) * imageSLM->widthStep + leftPM + j];
+		}
+	}
+
+	updateImageDesired();
+}
+
+
+
 void SLM::setPhase(int x, int y, int value, int height, int width)
 {
 	for(int i = x; i < x + height; i++)
@@ -40,15 +66,43 @@ void SLM::setPhase(int x, int y, int value, int height, int width)
 
 
 
-void SLM::showImage()
+void SLM::loadPhase()
 {
 	cvShowImage("Image_SLM", imageSLM);
 
-	cvWaitKey(1);
+	cvWaitKey(20);
+}
 
+
+
+void SLM::showImageVisible()
+{
 	cvShowImage("Image_Visible", imageVisible);
 
-	cvWaitKey(1);
+	cvWaitKey(20);
+}
+
+
+
+void SLM::updateImageDesired()
+{
+	for(int i = 0; i < imageDesired->height; i++)
+	{
+		for(int j = 0; j < imageDesired->width; j++)
+		{
+			((uchar *)imageDesired->imageData)[i * imageDesired->widthStep + j] =
+				((uchar *)imageSLM->imageData)[i * imageSLM->widthStep + j];
+		}
+	}
+}
+
+
+
+void SLM::saveImageDesired(std::string name, std::string path)
+{
+	path = path + "\\" + name + ".bmp";
+
+	cvSaveImage(path.c_str(), imageDesired);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

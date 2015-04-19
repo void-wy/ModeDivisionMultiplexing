@@ -11,10 +11,6 @@
 
 
 
-using namespace std;
-
-
-
 
 
 SLM::SLM(int height, int width)
@@ -27,9 +23,9 @@ SLM::SLM(int height, int width)
 
 	createImageVisible();
 
-	initializePhase();
+	createImageDesired();
 
-	showImage();
+	initializePhase();
 }
 
 
@@ -56,12 +52,12 @@ void SLM::setRangePM(int height, int width)
 	heightPM = height;
 	widthPM = width;
 
-	cout << "leftPM : " << leftPM << endl;
-	cout << "bottomPM : " << bottomPM << endl;
-	cout << "heightPM : " << heightPM << endl;
-	cout << "widthPM : " << widthPM << endl;
+	std::cout << "leftPM : " << leftPM << std::endl;
+	std::cout << "bottomPM : " << bottomPM << std::endl;
+	std::cout << "heightPM : " << heightPM << std::endl;
+	std::cout << "widthPM : " << widthPM << std::endl;
 
-	cout << endl;
+	std::cout << std::endl;
 }
 
 
@@ -73,25 +69,20 @@ void SLM::createImageVisible()
 
 
 
+void SLM::createImageDesired()
+{
+	imageDesired = cvCreateImage(cvGetSize(imageSLM), IPL_DEPTH_8U, 1);
+}
+
+
+
 void SLM::initializePhase()
 {
-	int i, j;
+	setPhase();
 
-	for(i = 0; i < imageSLM->height; i++)
-	{
-		for(j = 0; j < imageSLM->width; j++)
-		{
-			((uchar *)imageSLM->imageData)[i * imageSLM->widthStep + j] = 0;
-		}
-	}
+	loadPhase();
 
-	for(i = 0; i < imageVisible->height; i++)
-	{
-		for(j = 0; j < imageVisible->width; j++)
-		{
-			((uchar *)imageVisible->imageData)[i * imageVisible->widthStep + j] = 0;
-		}
-	}
+	showImageVisible();
 }
 
 
@@ -110,11 +101,11 @@ BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMoni
 
 		SetWindowPos(hwnd, HWND_TOPMOST, lprcMonitor->left, lprcMonitor->top, width, height, SWP_SHOWWINDOW);
 
-		cout << "MonitorLeft  : " << lprcMonitor->left << "\t" << "MonitorRight  : " << lprcMonitor->right << endl;
-		cout << "MonitorTop   : " << lprcMonitor->top << "\t" << "MonitorBottom : " << lprcMonitor->bottom << endl;
-		cout << "MonitorWidth : " << width << "\t" << "MonitorHeight : " << height << endl;
+		std::cout << "MonitorLeft  : " << lprcMonitor->left << "\t" << "MonitorRight  : " << lprcMonitor->right << std::endl;
+		std::cout << "MonitorTop   : " << lprcMonitor->top << "\t" << "MonitorBottom : " << lprcMonitor->bottom << std::endl;
+		std::cout << "MonitorWidth : " << width << "\t" << "MonitorHeight : " << height << std::endl;
 
-		cout << endl;
+		std::cout << std::endl;
 
 		((SLM *)dwData)->imageSLM = cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
 

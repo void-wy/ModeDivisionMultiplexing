@@ -19,7 +19,10 @@ void ImageProcessing::findContour(IplImage *image, int &left, int &right, int &t
 
 	cvThreshold(image, imageBinary, 0, 255, CV_THRESH_BINARY | CV_THRESH_OTSU);
 
-	int first = 1;
+	left = imageBinary->width;
+	right = -1;
+	top = -1;
+	bottom = imageBinary->height;
 
 	for(int i = 0; i < imageBinary->height; i++)
 	{
@@ -27,36 +30,22 @@ void ImageProcessing::findContour(IplImage *image, int &left, int &right, int &t
 		{
 			if(((uchar *)imageBinary->imageData)[i * imageBinary->widthStep + j]  == 255)
 			{
-				if(first == 0)
-				{
-					if(left > j)
-					{
-						left = j;
-					}
-
-					if(right < j)
-					{
-						right = j;
-					}
-
-					if(top < i)
-					{
-						top = i;
-					}
-
-					if(bottom > i)
-					{
-						bottom = i;
-					}
-				}
-				else
+				if(left > j)
 				{
 					left = j;
+				}
+				else if(right < j)
+				{
 					right = j;
-					top = i;
-					bottom = i;
+				}
 
-					first = 0;
+				if(top < i)
+				{
+					top = i;
+				}
+				else if(bottom > i)
+				{
+					bottom = i;
 				}
 			}
 		}

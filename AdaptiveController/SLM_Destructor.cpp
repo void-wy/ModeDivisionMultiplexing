@@ -34,6 +34,7 @@ void SLM::releaseImage()
 {
 	cvReleaseImage(&imageSLM);
 	cvReleaseImage(&imageVisible);
+	cvReleaseImage(&imageDesired);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

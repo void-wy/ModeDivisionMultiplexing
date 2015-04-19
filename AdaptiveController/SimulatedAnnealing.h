@@ -14,10 +14,19 @@
 
 
 
-#ifndef CCD_H
-#define CCD_H
+#ifndef REALCCD_H
+#define REALCCD_H
 
-#include "CCD.H"
+#include "RealCCD.h"
+
+#endif
+
+
+
+#ifndef FAKECCD_H
+#define FAKECCD_H
+
+#include "FakeCCD.h"
 
 #endif
 
@@ -27,6 +36,24 @@
 #define DIP_H
 
 #include "ImageProcessing.h"
+
+#endif
+
+
+
+#ifndef	TIME_H
+#define	TIME_H
+
+#include <time.h>
+
+#endif
+
+
+
+#ifndef	STRING_H
+#define	STRING_H
+
+#include <string>
 
 #endif
 
@@ -50,7 +77,7 @@ private:
 
 private:
 	SLM *slm;
-	CCD *ccd;
+	/*Test*/ FakeCCD *ccd;
 
 private:
 	ImageProcessing *IP;
@@ -73,10 +100,15 @@ private:
 	double BoltzmannConstant;
 
 private:
-	double correlation;
 	int DRN;
 	int PRN;
 	int TN;
+	double correlationBest;
+
+private:
+	clock_t start;
+	clock_t finish;
+	double duration;
 
 
 
@@ -85,12 +117,12 @@ private:
  */
 
 public:
-	SimulatedAnnealing(SLM *slmSA/*, CCD *ccdSA*/, ImageProcessing *IP_SA);
+	SimulatedAnnealing(SLM *slm, /*Test*/ FakeCCD *ccd, ImageProcessing *IP);
 
 private:
-	void connectHardware(SLM *slmSA/*, CCD *ccdSA*/);
+	void connectHardware(SLM *slm, /*Test*/ FakeCCD *ccd);
 
-	void includeIP(ImageProcessing *IP_SA);
+	void includeIP(ImageProcessing *IP);
 
 	void getImageCurrent();
 
@@ -107,16 +139,29 @@ private:
  */
 
 public:
-	void setModeIdeal(char *name, int margin);
+	void setModeIdeal(int margin, std::string name, std::string path = "LP");
 
 public:
-	void setParameterSA(double TsSA, double TtSA, double cSA, int cycSA);
+	void setPhaseInitial(std::string name, std::string path = "Phase");
+
+public:
+	void setParameterSA(double Ts, double Tt, double c, int cyc);
 
 public:
 	void run(int height, int width);
 
 public:
 	double getCorrelation();
+
+public:
+	void saveResult(std::string nameSLM = "SLM_Image_Desired", std::string nameCCD = "CCD_Image_Desired",
+		std::string nameSA = "SimulatedAnnealing", std::string path = "Output");
+
+public:
+	void startClock();
+
+public:
+	double finishClock();
 
 
 
@@ -127,9 +172,9 @@ public:
 private:
 	void setRangeSpot(int margin);
 
-	void createImageIdeal(char *name, int margin);
+	void createImageIdeal(int margin, std::string name, std::string path = "LP");
 
-	void showImage();
+	void showImageIdeal();
 
 
 
