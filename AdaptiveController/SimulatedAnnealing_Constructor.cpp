@@ -11,7 +11,7 @@
 
 
 
-SimulatedAnnealing::SimulatedAnnealing(SLM *slm, /*Test*/ FakeCCD *ccd, ImageProcessing *IP)
+SimulatedAnnealing::SimulatedAnnealing(SLM *slm, CCD *ccd, ImageProcessing *IP)
 {
 	connectHardware(slm, ccd);
 
@@ -31,7 +31,7 @@ SimulatedAnnealing::SimulatedAnnealing(SLM *slm, /*Test*/ FakeCCD *ccd, ImagePro
 
 
 
-void SimulatedAnnealing::connectHardware(SLM *slm, /*Test*/ FakeCCD *ccd)
+void SimulatedAnnealing::connectHardware(SLM *slm, CCD *ccd)
 {
 	this->slm = slm;
 	this->ccd = ccd;

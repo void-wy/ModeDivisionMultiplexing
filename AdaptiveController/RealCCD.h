@@ -5,6 +5,15 @@
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef CCD_H
+#define CCD_H
+
+#include "CCD.H"
+
+#endif
+
+
+
 #ifndef HIGHGUI_H
 #define HIGHGUI_H
 
@@ -37,7 +46,7 @@
 #ifndef REALCCD_C
 #define REALCCD_C
 
-class RealCCD
+class RealCCD : public CCD
 {
 
 /*

@@ -70,8 +70,6 @@ void SimulatedAnnealing::run(int height, int width)
 	double correlation = 0;
 	double tempCorrelation;
 
-	startClock();
-
 	while(TRUE)
 	{
 		if(Ts > Tt)
@@ -102,6 +100,8 @@ void SimulatedAnnealing::run(int height, int width)
 				}
 
 				ccd->snapShot();
+
+				noiseSolution(30);
 
 				tempCorrelation = getCorrelation();
 
@@ -146,6 +146,60 @@ void SimulatedAnnealing::run(int height, int width)
 
 
 
+void SimulatedAnnealing::noiseSolution(int noiseMaxValue)
+{
+	int i, j;
+
+	int imageMaxValue = 0;
+	int imageMinValue = 0;
+
+	for(i = 0; i < imageIdeal->height; i++)
+	{
+		for(j = 0; j < imageIdeal->width; j++)
+		{
+			if(noiseMaxValue > ((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot])
+			{
+				((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot] = 0;
+			}
+			else
+			{
+				((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot] =
+					((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot] - noiseMaxValue;
+
+				if(imageMaxValue < ((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot])
+				{
+					imageMaxValue = ((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot];
+				}
+
+				if(imageMinValue > ((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot])
+				{
+					imageMinValue = ((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot];
+				}
+			}
+		}
+	}
+
+	int range = imageMaxValue - imageMinValue;
+
+	if(0 == range)
+	{
+		return;
+	}
+
+	double ratio = 255 / range;
+
+	for(i = 0; i < imageIdeal->height; i++)
+	{
+		for(j = 0; j < imageIdeal->width; j++)
+		{
+			((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot] =
+				ratio * (((uchar *)imageCurrent->imageData)[(i + bottomSpot) * imageCurrent->widthStep + j + leftSpot] - imageMinValue);
+		}
+	}
+}
+
+
+
 double SimulatedAnnealing::getCorrelation()
 {
 	int cdIdeal, cdCurrent;
@@ -172,8 +226,6 @@ double SimulatedAnnealing::getCorrelation()
 
 void SimulatedAnnealing::saveResult(std::string nameSLM, std::string nameCCD, std::string nameSA, std::string path)
 {
-	finishClock();
-
 	slm->saveImageDesired(nameSLM, path);
 
 	ccd->saveImageDesired(nameCCD, path);

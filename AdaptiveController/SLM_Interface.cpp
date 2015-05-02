@@ -38,16 +38,25 @@ void SLM::setPhase(std::string name, std::string path)
 
 	cvReleaseImage(&temp);
 
-	for(int i = 0; i < imageVisible->height; i++)
+	int i, j;
+
+	for(i = 0; i < imageVisible->height; i++)
 	{
-		for(int j = 0; j < imageVisible->width; j++)
+		for(j = 0; j < imageVisible->width; j++)
 		{
 			((uchar *)imageVisible->imageData)[i * imageVisible->widthStep + j] =
 				((uchar *)imageSLM->imageData)[(bottomPM + i) * imageSLM->widthStep + leftPM + j];
 		}
 	}
 
-	updateImageDesired();
+	for(i = 0; i < imageDesired->height; i++)
+	{
+		for(j = 0; j < imageDesired->width; j++)
+		{
+			((uchar *)imageDesired->imageData)[i * imageDesired->widthStep + j] =
+				((uchar *)imageSLM->imageData)[i * imageSLM->widthStep + j];
+		}
+	}
 }
 
 
@@ -86,12 +95,12 @@ void SLM::showImageVisible()
 
 void SLM::updateImageDesired()
 {
-	for(int i = 0; i < imageDesired->height; i++)
+	for(int i = 0; i < heightPM; i++)
 	{
-		for(int j = 0; j < imageDesired->width; j++)
+		for(int j = 0; j < widthPM; j++)
 		{
-			((uchar *)imageDesired->imageData)[i * imageDesired->widthStep + j] =
-				((uchar *)imageSLM->imageData)[i * imageSLM->widthStep + j];
+			((uchar *)imageDesired->imageData)[(bottomPM + i) * imageDesired->widthStep + leftPM + j] =
+				((uchar *)imageSLM->imageData)[(bottomPM + i) * imageSLM->widthStep + leftPM + j];
 		}
 	}
 }

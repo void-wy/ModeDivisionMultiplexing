@@ -67,6 +67,8 @@ void SimulatedAnnealing::createImageIdeal(int margin, std::string name, std::str
 
 	cvReleaseImage(&imageOriginalIdeal);
 	cvReleaseImage(&imageOriginalResize);
+
+	IP->setNormalization(imageIdeal);
 }
 
 

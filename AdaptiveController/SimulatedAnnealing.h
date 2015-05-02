@@ -14,19 +14,10 @@
 
 
 
-#ifndef REALCCD_H
-#define REALCCD_H
+#ifndef CCD_H
+#define CCD_H
 
-#include "RealCCD.h"
-
-#endif
-
-
-
-#ifndef FAKECCD_H
-#define FAKECCD_H
-
-#include "FakeCCD.h"
+#include "CCD.H"
 
 #endif
 
@@ -77,7 +68,7 @@ private:
 
 private:
 	SLM *slm;
-	/*Test*/ FakeCCD *ccd;
+	CCD *ccd;
 
 private:
 	ImageProcessing *IP;
@@ -117,10 +108,10 @@ private:
  */
 
 public:
-	SimulatedAnnealing(SLM *slm, /*Test*/ FakeCCD *ccd, ImageProcessing *IP);
+	SimulatedAnnealing(SLM *slm, CCD *ccd, ImageProcessing *IP);
 
 private:
-	void connectHardware(SLM *slm, /*Test*/ FakeCCD *ccd);
+	void connectHardware(SLM *slm, CCD *ccd);
 
 	void includeIP(ImageProcessing *IP);
 
@@ -149,6 +140,9 @@ public:
 
 public:
 	void run(int height, int width);
+
+public:
+	void noiseSolution(int noiseMaxValue);
 
 public:
 	double getCorrelation();

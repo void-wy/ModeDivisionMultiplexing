@@ -5,6 +5,15 @@
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef CCD_H
+#define CCD_H
+
+#include "CCD.H"
+
+#endif
+
+
+
 #ifndef HIGHGUI_H
 #define HIGHGUI_H
 
@@ -28,7 +37,7 @@
 #ifndef FAKECCD_C
 #define FAKECCD_C
 
-class FakeCCD
+class FakeCCD : public CCD
 {
 
 /*
@@ -40,7 +49,9 @@ private:
 	IplImage *imageDesired;
 
 private:
-	char name[3];
+	std::string directory;
+	std::string name;
+	int numMax;
 	int num;
 
 
@@ -55,11 +66,11 @@ public:
 private:
 	void createWindow();
 
-	void createImageCCD(std::string name = "Blank", std::string path = "FakeCCD");
+	void createImageCCD();
 
 	void createImageDesired();
 
-	void initializeNum();
+	void initializeData();
 
 
 
@@ -71,7 +82,7 @@ public:
 	IplImage * getImageCCD();
 
 public:
-	void snapShot(int numMax = 10, std::string path = "FakeCCD");
+	void snapShot();
 
 public:
 	void showImageCCD();

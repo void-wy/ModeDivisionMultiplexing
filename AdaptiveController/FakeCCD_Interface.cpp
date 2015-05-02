@@ -20,7 +20,7 @@ IplImage * FakeCCD::getImageCCD()
 
 
 
-void FakeCCD::snapShot(int numMax, std::string path)
+void FakeCCD::snapShot()
 {
 	if(numMax == num)
 	{
@@ -29,9 +29,11 @@ void FakeCCD::snapShot(int numMax, std::string path)
 
 	num++;
 
+	char name[3];
+
 	sprintf(name, "%d", num);
 
-	path = path + "\\" + name + ".bmp";
+	std::string path = directory + "\\" + name + ".bmp";
 
 	IplImage *temp = cvLoadImage(path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 

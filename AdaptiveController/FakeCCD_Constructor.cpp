@@ -15,11 +15,11 @@ FakeCCD::FakeCCD()
 {
 	createWindow();
 
+	initializeData();
+
 	createImageCCD();
 
 	createImageDesired();
-
-	initializeNum();
 }
 
 
@@ -31,9 +31,19 @@ void FakeCCD::createWindow()
 
 
 
-void FakeCCD::createImageCCD(std::string name, std::string path)
+void FakeCCD::initializeData()
 {
-	path = path + "\\" + name + ".bmp";
+	directory = "FakeCCD";
+	name = "Blank";
+	numMax = 10;
+	num = 0;
+}
+
+
+
+void FakeCCD::createImageCCD()
+{
+	std::string path = directory + "\\" + name + ".bmp";
 
 	imageCCD = cvLoadImage(path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 }
@@ -43,13 +53,6 @@ void FakeCCD::createImageCCD(std::string name, std::string path)
 void FakeCCD::createImageDesired()
 {
 	imageDesired = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
-}
-
-
-
-void FakeCCD::initializeNum()
-{
-	num = 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

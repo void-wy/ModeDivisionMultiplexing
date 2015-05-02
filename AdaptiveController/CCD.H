@@ -14,68 +14,36 @@
 
 
 
+#ifndef	STRING_H
+#define	STRING_H
+
+#include <string>
+
+#endif
 
 
-#ifndef IP_C
-#define IP_C
 
-class ImageProcessing
+
+
+#ifndef CCD_C
+#define CCD_C
+
+class CCD
 {
-
-/*
- *	Data members
- */
-
-
-
-/*
- *	Constructor
- */
+public:
+	virtual IplImage * getImageCCD() = 0;
 
 public:
-	ImageProcessing();
-
-
-
-/*
- *	Interface
- */
+	virtual void snapShot() = 0;
 
 public:
-	void findContour(IplImage *image, int &left, int &right, int &top, int &bottom);
+	virtual void showImageCCD() = 0;
 
 public:
-	double getCorrelation(IplImage *imageIdeal, IplImage *imageCurrent);
+	virtual void updateImageDesired() = 0;
 
 public:
-	int getMaxValue(IplImage *image);
-
-public:
-	int getMinValue(IplImage *image);
-
-public:
-	double getMean(IplImage *image);
-
-public:
-	double getVariance(IplImage *image);
-
-public:
-	void setNormalization(IplImage *image);
-
-
-
-/*
- *	Utility
- */
-
-
-
-/*
- *	Destructor
- */
-
-public:
-	~ImageProcessing();
+	virtual void saveImageDesired(std::string name = "CCD_Image_Desired", std::string path = "Output") = 0;
 };
 
 #endif

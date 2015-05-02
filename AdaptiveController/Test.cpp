@@ -7,6 +7,10 @@
 
 #include "SimulatedAnnealing.h"
 
+#include "RealCCD.h"
+
+#include "FakeCCD.h"
+
 
 
 
@@ -15,7 +19,7 @@ void main()
 {
 	SLM *slm = new SLM(400, 400);
 
-	//CCD *ccd = new CCD();
+	//RealCCD *ccd = new RealCCD();
 
 	FakeCCD *ccd = new FakeCCD();
 
@@ -31,7 +35,11 @@ void main()
 
 	SA->setParameterSA(10000000, 100, 0.95, 100);
 
+	SA->startClock();
+
 	SA->run(200, 200);
+
+	SA->finishClock();
 
 	SA->saveResult();
 
