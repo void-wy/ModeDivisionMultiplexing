@@ -7,14 +7,14 @@
 
 #include "SLM.H"
 
-#include <iostream>
 
 
 
 
-
-SLM::SLM(int height, int width)
+SLM::SLM(int height, int width, std::string name, std::string path)
 {
+	openFileLog(name, path);
+
 	createWindow();
 
 	createImageSLM();
@@ -26,6 +26,19 @@ SLM::SLM(int height, int width)
 	createImageDesired();
 
 	initializePhase();
+}
+
+
+
+void SLM::openFileLog(std::string name, std::string path)
+{
+	path = path + "\\" + name;
+
+	fileLog = new std::ofstream();
+
+	fileLog->open(path.c_str());
+
+	fileLog->precision(10);
 }
 
 
@@ -52,12 +65,10 @@ void SLM::setRangePM(int height, int width)
 	heightPM = height;
 	widthPM = width;
 
-	std::cout << "leftPM : " << leftPM << std::endl;
-	std::cout << "bottomPM : " << bottomPM << std::endl;
-	std::cout << "heightPM : " << heightPM << std::endl;
-	std::cout << "widthPM : " << widthPM << std::endl;
-
-	std::cout << std::endl;
+	*fileLog << "leftPM : " << leftPM << std::endl;
+	*fileLog << "bottomPM : " << bottomPM << std::endl;
+	*fileLog << "heightPM : " << heightPM << std::endl;
+	*fileLog << "widthPM : " << widthPM << std::endl;
 }
 
 
@@ -101,11 +112,9 @@ BOOL CALLBACK MonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMoni
 
 		SetWindowPos(hwnd, HWND_TOPMOST, lprcMonitor->left, lprcMonitor->top, width, height, SWP_SHOWWINDOW);
 
-		std::cout << "MonitorLeft  : " << lprcMonitor->left << "\t" << "MonitorRight  : " << lprcMonitor->right << std::endl;
-		std::cout << "MonitorTop   : " << lprcMonitor->top << "\t" << "MonitorBottom : " << lprcMonitor->bottom << std::endl;
-		std::cout << "MonitorWidth : " << width << "\t" << "MonitorHeight : " << height << std::endl;
-
-		std::cout << std::endl;
+		*((SLM *)dwData)->fileLog << "MonitorLeft  : " << lprcMonitor->left << "\t" << "MonitorRight  : " << lprcMonitor->right << std::endl;
+		*((SLM *)dwData)->fileLog << "MonitorTop   : " << lprcMonitor->top << "\t" << "MonitorBottom : " << lprcMonitor->bottom << std::endl;
+		*((SLM *)dwData)->fileLog << "MonitorWidth : " << width << "\t" << "MonitorHeight : " << height << std::endl;
 
 		((SLM *)dwData)->imageSLM = cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
 

@@ -16,6 +16,8 @@ FakeCCD::~FakeCCD()
 	destroyWindow();
 
 	releaseImage();
+
+	closeFileLog();
 }
 
 
@@ -33,6 +35,15 @@ void FakeCCD::releaseImage()
 {
 	cvReleaseImage(&imageCCD);
 	cvReleaseImage(&imageDesired);
+}
+
+
+
+void FakeCCD::closeFileLog()
+{
+	fileLog->close();
+
+	delete fileLog;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

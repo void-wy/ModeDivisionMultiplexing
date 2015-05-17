@@ -50,6 +50,15 @@
 
 
 
+#ifndef FSTREAM_H
+#define FSTREAM_H
+
+#include <fstream>
+
+#endif
+
+
+
 
 
 #ifndef SA_C
@@ -98,8 +107,15 @@ private:
 
 private:
 	clock_t start;
-	clock_t finish;
 	double duration;
+
+private:
+	MSG message;
+
+private:
+	std::ofstream *fileLog;
+	std::ofstream *fileProcess;
+	std::ofstream *fileResult;
 
 
 
@@ -108,9 +124,11 @@ private:
  */
 
 public:
-	SimulatedAnnealing(SLM *slm, CCD *ccd, ImageProcessing *IP);
+	SimulatedAnnealing(SLM *slm, CCD *ccd, ImageProcessing *IP, std::string name = "SA_File_Log", std::string path = "Log");
 
 private:
+	void openFileLog(std::string name = "SA_File_Log", std::string path = "Log");
+
 	void connectHardware(SLM *slm, CCD *ccd);
 
 	void includeIP(ImageProcessing *IP);
@@ -130,7 +148,16 @@ private:
  */
 
 public:
+	void openFileSA(std::string nameProcess = "SA_File_Process", std::string nameResult = "SA_File_Result", std::string path = "Output");
+
+public:
+	void closeFileSA();
+
+public:
 	void setModeIdeal(int margin, std::string name, std::string path = "LP");
+
+public:
+	void saveImageIdeal(std::string name = "SA_Image_Ideal", std::string path = "Output");
 
 public:
 	void setPhaseInitial(std::string name, std::string path = "Phase");
@@ -148,8 +175,11 @@ public:
 	double getCorrelation();
 
 public:
-	void saveResult(std::string nameSLM = "SLM_Image_Desired", std::string nameCCD = "CCD_Image_Desired",
-		std::string nameSA = "SimulatedAnnealing", std::string path = "Output");
+	void saveImageResult(std::string nameSLM = "SLM_Image_Desired", std::string nameCCD = "CCD_Image_Desired",
+		std::string nameSA = "SA_Image_Ideal", std::string path = "Output");
+
+public:
+	void saveFileResult();
 
 public:
 	void startClock();
@@ -170,6 +200,9 @@ private:
 
 	void showImageIdeal();
 
+private:
+	void eventProcessing();
+
 
 
 /*
@@ -183,6 +216,8 @@ private:
 	void destroyWindow();
 
 	void releaseImage();
+
+	void closeFileLog();
 };
 
 #endif

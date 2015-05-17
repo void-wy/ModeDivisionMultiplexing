@@ -42,10 +42,13 @@ public:
  */
 
 public:
+	void resizeImage(IplImage *imageCurrent, IplImage *imageIdeal);
+
+public:
 	void findContour(IplImage *image, int &left, int &right, int &top, int &bottom);
 
 public:
-	double getCorrelation(IplImage *imageIdeal, IplImage *imageCurrent);
+	double getCorrelation(IplImage *imageCurrent, IplImage *imageIdeal);
 
 public:
 	int getMaxValue(IplImage *image);

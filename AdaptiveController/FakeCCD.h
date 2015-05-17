@@ -32,6 +32,15 @@
 
 
 
+#ifndef FSTREAM_H
+#define FSTREAM_H
+
+#include <fstream>
+
+#endif
+
+
+
 
 
 #ifndef FAKECCD_C
@@ -54,6 +63,12 @@ private:
 	int numMax;
 	int num;
 
+private:
+	MSG message;
+
+private:
+	std::ofstream *fileLog;
+
 
 
 /*
@@ -61,9 +76,11 @@ private:
  */
 
 public:
-	FakeCCD();
+	FakeCCD(std::string name = "CCD_File_Log", std::string path = "Log");
 
 private:
+	void openFileLog(std::string name = "CCD_File_Log", std::string path = "Log");
+
 	void createWindow();
 
 	void createImageCCD();
@@ -99,6 +116,9 @@ public:
  *	Utility
  */
 
+private:
+	void eventProcessing();
+
 
 
 /*
@@ -112,6 +132,8 @@ private:
 	void destroyWindow();
 
 	void releaseImage();
+
+	void closeFileLog();
 };
 
 #endif

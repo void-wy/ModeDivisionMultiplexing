@@ -7,9 +7,35 @@
 
 #include "SimulatedAnnealing.h"
 
-#include <iostream>
 
 
+
+
+void SimulatedAnnealing::openFileSA(std::string nameProcess, std::string nameResult, std::string path)
+{
+	nameProcess = path + "\\" + nameProcess;
+	nameResult = path + "\\" + nameResult;
+
+	fileProcess = new std::ofstream();
+	fileResult = new std::ofstream();
+
+	fileProcess->open(nameProcess.c_str());
+	fileResult->open(nameResult.c_str());
+
+	fileProcess->precision(10);
+	fileResult->precision(10);
+}
+
+
+
+void SimulatedAnnealing::closeFileSA()
+{
+	fileProcess->close();
+	fileResult->close();
+
+	delete fileProcess;
+	delete fileResult;
+}
 
 
 
@@ -20,6 +46,15 @@ void SimulatedAnnealing::setModeIdeal(int margin, std::string name, std::string 
 	createImageIdeal(margin, name, path);
 
 	showImageIdeal();
+}
+
+
+
+void SimulatedAnnealing::saveImageIdeal(std::string name, std::string path)
+{
+	path = path + "\\" + name + ".bmp";
+
+	cvSaveImage(path.c_str(), imageIdeal);
 }
 
 
@@ -47,19 +82,6 @@ void SimulatedAnnealing::setParameterSA(double Ts, double Tt, double c, int cyc)
 	DRN = 0;
 	PRN = 0;
 	TN = 0;
-
-	std::cout << "Ts : " << this->Ts << std::endl;
-	std::cout << "Tt : " << this->Tt << std::endl;
-	std::cout << "c : " << this->c << std::endl;
-	std::cout << "cyc : " << this->cyc << std::endl;
-	std::cout << "BoltzmannConstant : " << BoltzmannConstant << std::endl;
-
-	std::cout << "correlationBest : " << correlationBest << std::endl;
-	std::cout << "DRN : " << DRN << std::endl;
-	std::cout << "PRN : " << PRN << std::endl;
-	std::cout << "TN : " << TN << std::endl;
-
-	std::cout << std::endl;
 }
 
 
@@ -87,16 +109,19 @@ void SimulatedAnnealing::run(int height, int width)
 				{
 					correlationBest = correlation;
 
-					std::cout << "Correlation : \t" << correlationBest << std::endl;
+					*fileProcess << "Correlation : \t" << correlationBest << std::endl;
 
 					ccd->showImageCCD();
 
 					ccd->updateImageDesired();
 				}
 
-				if(27 == cvWaitKey(1))
+				if(0 == TN % 1000)
 				{
-					return;
+					if(27 == cvWaitKey(0))
+					{
+						return;
+					}
 				}
 
 				ccd->snapShot();
@@ -224,17 +249,30 @@ double SimulatedAnnealing::getCorrelation()
 
 
 
-void SimulatedAnnealing::saveResult(std::string nameSLM, std::string nameCCD, std::string nameSA, std::string path)
+void SimulatedAnnealing::saveImageResult(std::string nameSLM, std::string nameCCD, std::string nameSA, std::string path)
 {
 	slm->saveImageDesired(nameSLM, path);
 
 	ccd->saveImageDesired(nameCCD, path);
 
-	std::cout << "TN : \t" << TN << std::endl;
-	std::cout << "DRN : \t" << DRN << std::endl;
-	std::cout << "PRN : \t" << PRN << std::endl;
-	std::cout << "CorrelationBest : \t" << correlationBest << std::endl;
-	std::cout << "Duration : \t" << duration << std::endl;
+	saveImageIdeal(nameSA, path);
+}
+
+
+
+void SimulatedAnnealing::saveFileResult()
+{
+	*fileResult << "Ts : " << Ts << std::endl;
+	*fileResult << "Tt : " << Tt << std::endl;
+	*fileResult << "c : " << c << std::endl;
+	*fileResult << "cyc : " << cyc << std::endl;
+	*fileResult << "BoltzmannConstant : " << BoltzmannConstant << std::endl;
+
+	*fileResult << "TN : \t" << TN << std::endl;
+	*fileResult << "DRN : \t" << DRN << std::endl;
+	*fileResult << "PRN : \t" << PRN << std::endl;
+	*fileResult << "CorrelationBest : \t" << correlationBest << std::endl;
+	*fileResult << "Duration : \t" << duration << std::endl;
 }
 
 
@@ -248,9 +286,7 @@ void SimulatedAnnealing::startClock()
 
 double SimulatedAnnealing::finishClock()
 {
-	finish = clock();
-
-	duration = (double)(finish - start) / CLOCKS_PER_SEC;
+	duration = (double)(clock() - start) / CLOCKS_PER_SEC;
 
 	return duration;
 }

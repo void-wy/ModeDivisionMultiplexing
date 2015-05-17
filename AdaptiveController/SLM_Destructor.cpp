@@ -16,6 +16,8 @@ SLM::~SLM()
 	destroyWindow();
 
 	releaseImage();
+
+	closeFileLog();
 }
 
 
@@ -35,6 +37,15 @@ void SLM::releaseImage()
 	cvReleaseImage(&imageSLM);
 	cvReleaseImage(&imageVisible);
 	cvReleaseImage(&imageDesired);
+}
+
+
+
+void SLM::closeFileLog()
+{
+	fileLog->close();
+
+	delete fileLog;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

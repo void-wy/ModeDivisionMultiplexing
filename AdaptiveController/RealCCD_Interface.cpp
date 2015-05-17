@@ -47,7 +47,7 @@ void RealCCD::showImageCCD()
 {
 	cvShowImage("Image_CCD", imageCCD);
 
-	cvWaitKey(1);
+	eventProcessing();
 }
 
 

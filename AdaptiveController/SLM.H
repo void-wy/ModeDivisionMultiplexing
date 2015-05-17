@@ -32,6 +32,15 @@
 
 
 
+#ifndef FSTREAM_H
+#define FSTREAM_H
+
+#include <fstream>
+
+#endif
+
+
+
 
 
 #ifndef SLM_C
@@ -55,6 +64,12 @@ private:
 	int heightPM;
 	int widthPM;
 
+private:
+	MSG message;
+
+private:
+	std::ofstream *fileLog;
+
 
 
 /*
@@ -62,9 +77,11 @@ private:
  */
 
 public:
-	SLM(int height, int width);
+	SLM(int height, int width, std::string name = "SLM_File_Log", std::string path = "Log");
 
 private:
+	void openFileLog(std::string name = "SLM_File_Log", std::string path = "Log");
+
 	void createWindow();
 
 	void createImageSLM();
@@ -116,6 +133,9 @@ public:
  *	Utility
  */
 
+private:
+	void eventProcessing();
+
 
 
 /*
@@ -129,6 +149,8 @@ private:
 	void destroyWindow();
 
 	void releaseImage();
+
+	void closeFileLog();
 };
 
 #endif

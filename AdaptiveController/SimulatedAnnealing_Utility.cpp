@@ -7,10 +7,6 @@
 
 #include "SimulatedAnnealing.h"
 
-#include "cv.h"
-
-#include <iostream>
-
 
 
 
@@ -26,12 +22,10 @@ void SimulatedAnnealing::setRangeSpot(int margin)
 	heightSpot = top - bottom + 2 * margin;
 	widthSpot = right - left + 2 * margin;
 
-	std::cout << "leftSpot : " << leftSpot << std::endl;
-	std::cout << "bottomSpot : " << bottomSpot << std::endl;
-	std::cout << "heightSpot : " << heightSpot << std::endl;
-	std::cout << "widthSpot : " << widthSpot << std::endl;
-
-	std::cout << std::endl;
+	*fileLog << "leftSpot : " << leftSpot << std::endl;
+	*fileLog << "bottomSpot : " << bottomSpot << std::endl;
+	*fileLog << "heightSpot : " << heightSpot << std::endl;
+	*fileLog << "widthSpot : " << widthSpot << std::endl;
 }
 
 
@@ -51,7 +45,7 @@ void SimulatedAnnealing::createImageIdeal(int margin, std::string name, std::str
 
 	IplImage *imageOriginalResize = cvCreateImage(cvSize(width, height), IPL_DEPTH_8U, 1);
 
-	cvResize(imageOriginalIdeal, imageOriginalResize);
+	IP->resizeImage(imageOriginalIdeal, imageOriginalResize);
 
 	IP->findContour(imageOriginalResize, left, right, top, bottom);
 
@@ -77,7 +71,18 @@ void SimulatedAnnealing::showImageIdeal()
 {
 	cvShowImage("Image_Ideal", imageIdeal);
 
-	cvWaitKey(20);
+	eventProcessing();
+}
+
+
+
+void SimulatedAnnealing::eventProcessing()
+{
+	while(PeekMessage(&message, 0, 0, 0, PM_REMOVE))
+	{
+		TranslateMessage(&message);
+		DispatchMessage(&message);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -11,8 +11,10 @@
 
 
 
-RealCCD::RealCCD()
+RealCCD::RealCCD(std::string name, std::string path)
 {
+	openFileLog(name, path);
+
 	createWindow();
 
 	createImageCCD();
@@ -20,6 +22,19 @@ RealCCD::RealCCD()
 	createImageDesired();
 
 	initializeICC();
+}
+
+
+
+void RealCCD::openFileLog(std::string name, std::string path)
+{
+	path = path + "\\" + name;
+
+	fileLog = new std::ofstream();
+
+	fileLog->open(path.c_str());
+
+	fileLog->precision(10);
 }
 
 

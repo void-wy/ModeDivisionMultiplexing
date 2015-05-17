@@ -16,6 +16,8 @@ SimulatedAnnealing::~SimulatedAnnealing()
 	destroyWindow();
 
 	releaseImage();
+
+	closeFileLog();
 }
 
 
@@ -32,6 +34,15 @@ void SimulatedAnnealing::destroyWindow()
 void SimulatedAnnealing::releaseImage()
 {
 	cvReleaseImage(&imageIdeal);
+}
+
+
+
+void SimulatedAnnealing::closeFileLog()
+{
+	fileLog->close();
+
+	delete fileLog;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

@@ -11,8 +11,10 @@
 
 
 
-FakeCCD::FakeCCD()
+FakeCCD::FakeCCD(std::string name, std::string path)
 {
+	openFileLog(name, path);
+
 	createWindow();
 
 	initializeData();
@@ -20,6 +22,19 @@ FakeCCD::FakeCCD()
 	createImageCCD();
 
 	createImageDesired();
+}
+
+
+
+void FakeCCD::openFileLog(std::string name, std::string path)
+{
+	path = path + "\\" + name;
+
+	fileLog = new std::ofstream();
+
+	fileLog->open(path.c_str());
+
+	fileLog->precision(10);
 }
 
 

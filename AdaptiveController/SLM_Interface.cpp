@@ -79,7 +79,7 @@ void SLM::loadPhase()
 {
 	cvShowImage("Image_SLM", imageSLM);
 
-	cvWaitKey(20);
+	eventProcessing();
 }
 
 
@@ -88,7 +88,7 @@ void SLM::showImageVisible()
 {
 	cvShowImage("Image_Visible", imageVisible);
 
-	cvWaitKey(20);
+	eventProcessing();
 }
 
 

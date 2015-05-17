@@ -13,6 +13,13 @@
 
 
 
+void ImageProcessing::resizeImage(IplImage *imageCurrent, IplImage *imageIdeal)
+{
+	cvResize(imageCurrent, imageIdeal);
+}
+
+
+
 void ImageProcessing::findContour(IplImage *image, int &left, int &right, int &top, int &bottom)
 {
 	IplImage *imageBinary = cvCreateImage(cvSize(image->width, image->height), IPL_DEPTH_8U, 1);
@@ -56,7 +63,7 @@ void ImageProcessing::findContour(IplImage *image, int &left, int &right, int &t
 
 
 
-double ImageProcessing::getCorrelation(IplImage *imageIdeal, IplImage *imageCurrent)
+double ImageProcessing::getCorrelation(IplImage *imageCurrent, IplImage *imageIdeal)
 {
 
 	double sumNumerator = 0, sumDenominator1 = 0, sumDenominator2 = 0;

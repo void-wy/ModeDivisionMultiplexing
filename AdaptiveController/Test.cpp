@@ -29,6 +29,8 @@ void main()
 
 
 
+	SA->openFileSA();
+
 	SA->setModeIdeal(15, "11a");
 
 	SA->setPhaseInitial("01-11a");
@@ -41,7 +43,11 @@ void main()
 
 	SA->finishClock();
 
-	SA->saveResult();
+	SA->saveImageResult();
+
+	SA->saveFileResult();
+
+	SA->closeFileSA();
 
 
 

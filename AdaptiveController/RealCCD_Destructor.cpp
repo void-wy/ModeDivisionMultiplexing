@@ -18,6 +18,8 @@ RealCCD::~RealCCD()
 	destroyWindow();
 
 	releaseImage();
+
+	closeFileLog();
 }
 
 
@@ -46,6 +48,15 @@ void RealCCD::releaseImage()
 {
 	cvReleaseImage(&imageCCD);
 	cvReleaseImage(&imageDesired);
+}
+
+
+
+void RealCCD::closeFileLog()
+{
+	fileLog->close();
+
+	delete fileLog;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////

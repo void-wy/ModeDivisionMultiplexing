@@ -1,0 +1,7 @@
+MonitorLeft  : 1440	MonitorRight  : 2880
+MonitorTop   : 0	MonitorBottom : 900
+MonitorWidth : 1440	MonitorHeight : 900
+leftPM : 520
+bottomPM : 250
+heightPM : 400
+widthPM : 400

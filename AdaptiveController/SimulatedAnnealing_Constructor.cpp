@@ -11,8 +11,10 @@
 
 
 
-SimulatedAnnealing::SimulatedAnnealing(SLM *slm, CCD *ccd, ImageProcessing *IP)
+SimulatedAnnealing::SimulatedAnnealing(SLM *slm, CCD *ccd, ImageProcessing *IP, std::string name, std::string path)
 {
+	openFileLog(name, path);
+
 	connectHardware(slm, ccd);
 
 	includeIP(IP);
@@ -27,6 +29,19 @@ SimulatedAnnealing::SimulatedAnnealing(SLM *slm, CCD *ccd, ImageProcessing *IP)
 	createWindow();
 
 	setSeedRand();
+}
+
+
+
+void SimulatedAnnealing::openFileLog(std::string name, std::string path)
+{
+	path = path + "\\" + name;
+
+	fileLog = new std::ofstream();
+
+	fileLog->open(path.c_str());
+
+	fileLog->precision(10);
 }
 
 
