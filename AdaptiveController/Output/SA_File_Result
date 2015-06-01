@@ -4,7 +4,7 @@ c : 0.95
 cyc : 100
 BoltzmannConstant : 1.3806488e-023
 TN : 	1000
-DRN : 	2
+DRN : 	3
 PRN : 	99
-CorrelationBest : 	0.721450513
-Duration : 	25.116
+CorrelationBest : 	0.7286877458
+Duration : 	26.037

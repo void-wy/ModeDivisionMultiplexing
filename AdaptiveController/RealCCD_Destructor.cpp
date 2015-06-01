@@ -15,8 +15,6 @@ RealCCD::~RealCCD()
 {
 	finalizeICC();
 
-	destroyWindow();
-
 	releaseImage();
 
 	closeFileLog();
@@ -31,15 +29,6 @@ void RealCCD::finalizeICC()
 	status = EndCGCard(hcg);
 
 	CG_VERIFY(status);
-}
-
-
-
-void RealCCD::destroyWindow()
-{
-	cvWaitKey(0);
-
-	cvDestroyWindow("Image_CCD");
 }
 
 

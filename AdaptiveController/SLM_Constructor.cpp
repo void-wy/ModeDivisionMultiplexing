@@ -15,7 +15,7 @@ SLM::SLM(int height, int width, std::string name, std::string path)
 {
 	openFileLog(name, path);
 
-	createWindow();
+	createWindowSLM();
 
 	createImageSLM();
 
@@ -43,10 +43,9 @@ void SLM::openFileLog(std::string name, std::string path)
 
 
 
-void SLM::createWindow()
+void SLM::createWindowSLM()
 {
 	cvNamedWindow("Image_SLM", 0);
-	cvNamedWindow("Image_Visible");
 }
 
 

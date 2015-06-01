@@ -65,7 +65,6 @@ void ImageProcessing::findContour(IplImage *image, int &left, int &right, int &t
 
 double ImageProcessing::getCorrelation(IplImage *imageCurrent, IplImage *imageIdeal)
 {
-
 	double sumNumerator = 0, sumDenominator1 = 0, sumDenominator2 = 0;
 
 	for(int i = 0; i < imageIdeal->height; i++)
@@ -163,26 +162,108 @@ double ImageProcessing::getVariance(IplImage *image)
 
 
 
-void ImageProcessing::setNormalization(IplImage *image)
+void ImageProcessing::setNormalization(IplImage *image, int maxValueIdeal, int minValueIdeal)
 {
-	int max = getMaxValue(image);
-	int min = getMinValue(image);
+	int i, j;
 
-	int range = max - min;
+	int maxValueCurrent = 0;
+	int minValueCurrent = 255;
+
+	for(i = 0; i < image->height; i++)
+	{
+		for(j = 0; j < image->width; j++)
+		{
+			if(maxValueCurrent < ((uchar *)image->imageData)[i * image->widthStep + j])
+			{
+				maxValueCurrent = ((uchar *)image->imageData)[i * image->widthStep + j];
+			}
+
+			if(minValueCurrent > ((uchar *)image->imageData)[i * image->widthStep + j])
+			{
+				minValueCurrent = ((uchar *)image->imageData)[i * image->widthStep + j];
+			}
+		}
+	}
+
+	int range = maxValueCurrent - minValueCurrent;
 
 	if(0 == range)
 	{
 		return;
 	}
 
-	double ratio = 255 / range;
+	double ratio = (maxValueIdeal - minValueIdeal) / range;
 
-	for(int i = 0; i < image->height; i++)
+	for(i = 0; i < image->height; i++)
 	{
-		for(int j = 0; j < image->width; j++)
+		for(j = 0; j < image->width; j++)
 		{
 			((uchar *)image->imageData)[i * image->widthStep + j] =
-				ratio * (((uchar *)image->imageData)[i * image->widthStep + j] - min);
+				ratio * (((uchar *)image->imageData)[i * image->widthStep + j] - minValueCurrent) + minValueIdeal;
+		}
+	}
+}
+
+
+
+void ImageProcessing::setMedianFiltering(IplImage *imageCurrent, IplImage *imageIdeal)
+{
+	uchar sort[9];
+	uchar temp;
+
+	int i, j;
+	int m, n;
+	int k;
+	int min;
+
+	for(i = 0; i < imageIdeal->height; i++)
+	{
+		((uchar *)imageIdeal->imageData)[i * imageIdeal->widthStep] = ((uchar *)imageCurrent->imageData)[i * imageCurrent->widthStep];
+		((uchar *)imageIdeal->imageData)[i * imageIdeal->widthStep + imageIdeal->width - 1] =
+			((uchar *)imageCurrent->imageData)[i * imageCurrent->widthStep + imageCurrent->width - 1];
+	}
+
+	for(j = 1; j < imageIdeal->width - 1; j++)
+	{
+		((uchar *)imageIdeal->imageData)[j] = ((uchar *)imageCurrent->imageData)[j];
+		((uchar *)imageIdeal->imageData)[(imageIdeal->height - 1) * imageIdeal->widthStep + j] =
+			((uchar *)imageCurrent->imageData)[(imageCurrent->height - 1) * imageCurrent->widthStep + j];
+	}
+
+	for(i = 0; i < imageIdeal->height; i++)
+	{
+		for(j = 0; j < imageIdeal->width; j++)
+		{
+			k = 0;
+
+			for(m = i - 1; m < i + 2; m++)
+			{
+				for(n = j - 1; n < j + 2; n++)
+				{
+					sort[k] = ((uchar *)imageCurrent->imageData)[m * imageCurrent->widthStep + n];
+
+					k++;
+				}
+			}
+
+			for(m = 0; m < 5; m++)
+			{
+				min = m;
+
+				for(n = m + 1; n < 9; n++)
+				{
+					if(sort[n] < sort[min])
+					{
+						min = n;
+					}
+				}
+
+				temp = sort[m];
+				sort[m] = sort[min];
+				sort[min] = temp;
+			}
+
+			((uchar *)imageIdeal->imageData)[i * imageIdeal->widthStep + j] = sort[4];
 		}
 	}
 }

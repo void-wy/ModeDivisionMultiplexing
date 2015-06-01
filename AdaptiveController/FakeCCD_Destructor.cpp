@@ -13,20 +13,9 @@
 
 FakeCCD::~FakeCCD()
 {
-	destroyWindow();
-
 	releaseImage();
 
 	closeFileLog();
-}
-
-
-
-void FakeCCD::destroyWindow()
-{
-	cvWaitKey(0);
-
-	cvDestroyWindow("Image_CCD");
 }
 
 

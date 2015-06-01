@@ -15,8 +15,6 @@ FakeCCD::FakeCCD(std::string name, std::string path)
 {
 	openFileLog(name, path);
 
-	createWindow();
-
 	initializeData();
 
 	createImageCCD();
@@ -35,13 +33,6 @@ void FakeCCD::openFileLog(std::string name, std::string path)
 	fileLog->open(path.c_str());
 
 	fileLog->precision(10);
-}
-
-
-
-void FakeCCD::createWindow()
-{
-	cvNamedWindow("Image_CCD");
 }
 
 

@@ -13,9 +13,44 @@
 
 
 
-IplImage * RealCCD::getImageCCD()
+void RealCCD::createWindow()
 {
-	return imageCCD;
+	cvNamedWindow("Image_CCD");
+}
+
+
+
+void RealCCD::destroyWindow()
+{
+	cvDestroyWindow("Image_CCD");
+}
+
+
+
+IplImage * RealCCD::createImageCopy()
+{
+	return cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+}
+
+
+
+void RealCCD::updateImageCopy(IplImage *imageCopy)
+{
+	for(int i = 0; i < imageCopy->height; i++)
+	{
+		for(int j = 0; j < imageCopy->width; j++)
+		{
+			((uchar *)imageCopy->imageData)[i * imageCopy->widthStep + j] =
+				((uchar *)imageCCD->imageData)[i * imageCCD->widthStep + j];
+		}
+	}
+}
+
+
+
+void RealCCD::releaseImageCopy(IplImage *imageCopy)
+{
+	cvReleaseImage(&imageCopy);
 }
 
 
@@ -43,11 +78,34 @@ void RealCCD::snapShot()
 
 
 
+void RealCCD::snapShot(IplImage *imageCopy)
+{
+	status = CGSnapShot(hcg, 0, 0, TRUE, 1);
+
+	CG_VERIFY(status);
+
+	if(CG_SUCCESS(status))
+	{
+		status = CGStaticMemLock(0, 768 * 576, &handle, (VOID **)&pStaticBuffer);
+
+		if(CG_SUCCESS(status))
+		{
+			CGDataTransform(pImageBuffer, pStaticBuffer, 768, 576, 8, FALSE);
+		}
+
+		CGStaticMemUnlock(handle);
+	}
+
+	imageCopy->imageData = (char *)pImageBuffer;
+}
+
+
+
 void RealCCD::showImageCCD()
 {
 	cvShowImage("Image_CCD", imageCCD);
 
-	eventProcessing();
+	runEventProcessing();
 }
 
 

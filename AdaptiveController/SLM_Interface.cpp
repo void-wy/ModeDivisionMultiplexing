@@ -13,6 +13,59 @@
 
 
 
+void SLM::createWindow()
+{
+	cvNamedWindow("Image_Visible");
+}
+
+
+
+void SLM::destroyWindow()
+{
+	cvDestroyWindow("Image_Visible");
+}
+
+
+
+IplImage * SLM::createImageCopy()
+{
+	IplImage *imageCopy = cvCreateImage(cvGetSize(imageSLM), IPL_DEPTH_8U, 1);
+
+	for(int i = 0; i < imageCopy->height; i++)
+	{
+		for(int j = 0; j < imageCopy->width; j++)
+		{
+			((uchar *)imageCopy->imageData)[i * imageCopy->widthStep + j] =
+				((uchar *)imageSLM->imageData)[i * imageSLM->widthStep + j];
+		}
+	}
+
+	return imageCopy;
+}
+
+
+
+void SLM::updateImageCopy(IplImage *imageCopy)
+{
+	for(int i = 0; i < heightPM; i++)
+	{
+		for(int j = 0; j < widthPM; j++)
+		{
+			((uchar *)imageCopy->imageData)[(bottomPM + i) * imageCopy->widthStep + leftPM + j] =
+				((uchar *)imageSLM->imageData)[(bottomPM + i) * imageSLM->widthStep + leftPM + j];
+		}
+	}
+}
+
+
+
+void SLM::releaseImageCopy(IplImage *imageCopy)
+{
+	cvReleaseImage(&imageCopy);
+}
+
+
+
 void SLM::getRangePM(int &height, int &width)
 {
 	height = heightPM;
@@ -79,7 +132,7 @@ void SLM::loadPhase()
 {
 	cvShowImage("Image_SLM", imageSLM);
 
-	eventProcessing();
+	runEventProcessing();
 }
 
 
@@ -88,7 +141,7 @@ void SLM::showImageVisible()
 {
 	cvShowImage("Image_Visible", imageVisible);
 
-	eventProcessing();
+	runEventProcessing();
 }
 
 

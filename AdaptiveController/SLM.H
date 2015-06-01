@@ -82,7 +82,7 @@ public:
 private:
 	void openFileLog(std::string name = "SLM_File_Log", std::string path = "Log");
 
-	void createWindow();
+	void createWindowSLM();
 
 	void createImageSLM();
 
@@ -102,6 +102,21 @@ private:
 /*
  *	Interface
  */
+
+public:
+	void createWindow();
+
+public:
+	void destroyWindow();
+
+public:
+	IplImage * createImageCopy();
+
+public:
+	void updateImageCopy(IplImage *imageCopy);
+
+public:
+	void releaseImageCopy(IplImage *imageCopy);
 
 public:
 	void getRangePM(int &height, int &width);
@@ -134,7 +149,7 @@ public:
  */
 
 private:
-	void eventProcessing();
+	void runEventProcessing();
 
 
 
@@ -146,7 +161,7 @@ public:
 	~SLM();
 
 private:
-	void destroyWindow();
+	void destroyWindowSLM();
 
 	void releaseImage();
 

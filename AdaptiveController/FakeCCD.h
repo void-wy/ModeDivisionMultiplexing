@@ -81,13 +81,11 @@ public:
 private:
 	void openFileLog(std::string name = "CCD_File_Log", std::string path = "Log");
 
-	void createWindow();
+	void initializeData();
 
 	void createImageCCD();
 
 	void createImageDesired();
-
-	void initializeData();
 
 
 
@@ -96,10 +94,25 @@ private:
  */
 
 public:
-	IplImage * getImageCCD();
+	void createWindow();
+
+public:
+	void destroyWindow();
+
+public:
+	IplImage * createImageCopy();
+
+public:
+	void updateImageCopy(IplImage *imageCopy);
+
+public:
+	void releaseImageCopy(IplImage *imageCopy);
 
 public:
 	void snapShot();
+
+public:
+	void snapShot(IplImage *imageCopy);
 
 public:
 	void showImageCCD();
@@ -117,7 +130,7 @@ public:
  */
 
 private:
-	void eventProcessing();
+	void runEventProcessing();
 
 
 
@@ -129,8 +142,6 @@ public:
 	~FakeCCD();
 
 private:
-	void destroyWindow();
-
 	void releaseImage();
 
 	void closeFileLog();

@@ -63,7 +63,10 @@ public:
 	double getVariance(IplImage *image);
 
 public:
-	void setNormalization(IplImage *image);
+	void setNormalization(IplImage *image, int maxValueIdeal = 255, int minValueIdeal = 0);
+
+public:
+	void setMedianFiltering(IplImage *imageCurrent, IplImage *imageIdeal);
 
 
 

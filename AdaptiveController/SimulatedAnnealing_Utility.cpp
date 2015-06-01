@@ -13,9 +13,11 @@
 
 void SimulatedAnnealing::setRangeSpot(int margin)
 {
+	ccd->snapShot(imageCCD);
+
 	int left, right, top, bottom;
 
-	IP->findContour(imageCurrent, left, right, top, bottom);
+	IP->findContour(imageCCD, left, right, top, bottom);
 
 	leftSpot = left - margin;
 	bottomSpot = bottom - margin;
@@ -71,12 +73,27 @@ void SimulatedAnnealing::showImageIdeal()
 {
 	cvShowImage("Image_Ideal", imageIdeal);
 
-	eventProcessing();
+	runEventProcessing();
 }
 
 
 
-void SimulatedAnnealing::eventProcessing()
+void SimulatedAnnealing::createImageCurrent()
+{
+	imageCurrent = cvCreateImage(cvSize(widthSpot, heightSpot), IPL_DEPTH_8U, 1);
+}
+
+
+
+void SimulatedAnnealing::createImageDesired()
+{
+	imageDesiredCCD = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+	imageDesiredCurrent = cvCreateImage(cvGetSize(imageCurrent), IPL_DEPTH_8U, 1);
+}
+
+
+
+void SimulatedAnnealing::runEventProcessing()
 {
 	while(PeekMessage(&message, 0, 0, 0, PM_REMOVE))
 	{

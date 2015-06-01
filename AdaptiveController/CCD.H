@@ -31,10 +31,25 @@
 class CCD
 {
 public:
-	virtual IplImage * getImageCCD() = 0;
+	virtual void createWindow() = 0;
+
+public:
+	virtual void destroyWindow() = 0;
+
+public:
+	virtual IplImage * createImageCopy() = 0;
+
+public:
+	virtual void updateImageCopy(IplImage *imageCopy) = 0;
+
+public:
+	virtual void releaseImageCopy(IplImage *imageCopy) = 0;
 
 public:
 	virtual void snapShot() = 0;
+
+public:
+	virtual void snapShot(IplImage *imageCopy) = 0;
 
 public:
 	virtual void showImageCCD() = 0;

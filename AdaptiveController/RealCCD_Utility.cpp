@@ -11,7 +11,7 @@
 
 
 
-void RealCCD::eventProcessing()
+void RealCCD::runEventProcessing()
 {
 	while(PeekMessage(&message, 0, 0, 0, PM_REMOVE))
 	{

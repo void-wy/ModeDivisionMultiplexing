@@ -11,7 +11,7 @@
 
 
 
-void SLM::eventProcessing()
+void SLM::runEventProcessing()
 {
 	while(PeekMessage(&message, 0, 0, 0, PM_REMOVE))
 	{

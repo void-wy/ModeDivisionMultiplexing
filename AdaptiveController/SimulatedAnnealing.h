@@ -72,8 +72,11 @@ class SimulatedAnnealing
  */
 
 private:
+	IplImage *imageCCD;
 	IplImage *imageCurrent;
 	IplImage *imageIdeal;
+	IplImage *imageDesiredCCD;
+	IplImage *imageDesiredCurrent;
 
 private:
 	SLM *slm;
@@ -133,11 +136,9 @@ private:
 
 	void includeIP(ImageProcessing *IP);
 
-	void getImageCurrent();
+	void createImageCCD();
 
 	void setRangePM();
-
-	void createWindow();
 
 	void setSeedRand();
 
@@ -146,6 +147,12 @@ private:
 /*
  *	Interface
  */
+
+public:
+	void createWindow();
+
+public:
+	void destroyWindow();
 
 public:
 	void openFileSA(std::string nameProcess = "SA_File_Process", std::string nameResult = "SA_File_Result", std::string path = "Output");
@@ -157,7 +164,25 @@ public:
 	void setModeIdeal(int margin, std::string name, std::string path = "LP");
 
 public:
+	void createImageSA();
+
+public:
+	void updateImageCurrent();
+
+public:
+	void updateImageDesired();
+
+public:
+	void showImageCCD();
+
+public:
+	void showImageCurrent();
+
+public:
 	void saveImageIdeal(std::string name = "SA_Image_Ideal", std::string path = "Output");
+
+public:
+	void saveImageDesired(std::string nameCCD = "CCD_Image_Desired", std::string nameSA = "SA_Image_Desired", std::string path = "Output");
 
 public:
 	void setPhaseInitial(std::string name, std::string path = "Phase");
@@ -166,17 +191,14 @@ public:
 	void setParameterSA(double Ts, double Tt, double c, int cyc);
 
 public:
-	void run(int height, int width);
+	void runSA(int height, int width);
 
 public:
-	void noiseSolution(int noiseMaxValue);
-
-public:
-	double getCorrelation();
+	void snapShot();
 
 public:
 	void saveImageResult(std::string nameSLM = "SLM_Image_Desired", std::string nameCCD = "CCD_Image_Desired",
-		std::string nameSA = "SA_Image_Ideal", std::string path = "Output");
+		std::string nameSA = "SA_Image_Desired", std::string nameIdeal = "SA_Image_Ideal", std::string path = "Output");
 
 public:
 	void saveFileResult();
@@ -200,8 +222,12 @@ private:
 
 	void showImageIdeal();
 
+	void createImageCurrent();
+
+	void createImageDesired();
+
 private:
-	void eventProcessing();
+	void runEventProcessing();
 
 
 
@@ -213,8 +239,6 @@ public:
 	~SimulatedAnnealing();
 
 private:
-	void destroyWindow();
-
 	void releaseImage();
 
 	void closeFileLog();

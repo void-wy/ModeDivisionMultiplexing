@@ -13,9 +13,44 @@
 
 
 
-IplImage * FakeCCD::getImageCCD()
+void FakeCCD::createWindow()
 {
-	return imageCCD;
+	cvNamedWindow("Image_CCD");
+}
+
+
+
+void FakeCCD::destroyWindow()
+{
+	cvDestroyWindow("Image_CCD");
+}
+
+
+
+IplImage * FakeCCD::createImageCopy()
+{
+	return cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+}
+
+
+
+void FakeCCD::updateImageCopy(IplImage *imageCopy)
+{
+	for(int i = 0; i < imageCopy->height; i++)
+	{
+		for(int j = 0; j < imageCopy->width; j++)
+		{
+			((uchar *)imageCopy->imageData)[i * imageCopy->widthStep + j] =
+				((uchar *)imageCCD->imageData)[i * imageCCD->widthStep + j];
+		}
+	}
+}
+
+
+
+void FakeCCD::releaseImageCopy(IplImage *imageCopy)
+{
+	cvReleaseImage(&imageCopy);
 }
 
 
@@ -44,11 +79,35 @@ void FakeCCD::snapShot()
 
 
 
+void FakeCCD::snapShot(IplImage *imageCopy)
+{
+	if(numMax == num)
+	{
+		num = 0;
+	}
+
+	num++;
+
+	char name[3];
+
+	sprintf(name, "%d", num);
+
+	std::string path = directory + "\\" + name + ".bmp";
+
+	IplImage *temp = cvLoadImage(path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+
+	cvResize(temp, imageCopy);
+
+	cvReleaseImage(&temp);
+}
+
+
+
 void FakeCCD::showImageCCD()
 {
 	cvShowImage("Image_CCD", imageCCD);
 
-	eventProcessing();
+	runEventProcessing();
 }
 
 

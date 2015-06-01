@@ -30,9 +30,17 @@ void main()
 
 
 
+	slm->createWindow();
+
+	SA->createWindow();
+
+
+
 	SA->openFileSA();
 
 	SA->setModeIdeal(15, "11a");
+
+	SA->createImageSA();
 
 	SA->setPhaseInitial("01-11a");
 
@@ -40,7 +48,7 @@ void main()
 
 	SA->startClock();
 
-	SA->run(200, 200);
+	SA->runSA(200, 200);
 
 	SA->finishClock();
 
@@ -49,6 +57,12 @@ void main()
 	SA->saveFileResult();
 
 	SA->closeFileSA();
+
+
+
+	SA->destroyWindow();
+
+	slm->destroyWindow();
 
 
 

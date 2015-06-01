@@ -13,8 +13,6 @@
 
 SimulatedAnnealing::~SimulatedAnnealing()
 {
-	destroyWindow();
-
 	releaseImage();
 
 	closeFileLog();
@@ -22,18 +20,14 @@ SimulatedAnnealing::~SimulatedAnnealing()
 
 
 
-void SimulatedAnnealing::destroyWindow()
-{
-	cvWaitKey(0);
-
-	cvDestroyWindow("Image_Ideal");
-}
-
-
-
 void SimulatedAnnealing::releaseImage()
 {
+	ccd->releaseImageCopy(imageCCD);
+
+	cvReleaseImage(&imageCurrent);
 	cvReleaseImage(&imageIdeal);
+	cvReleaseImage(&imageDesiredCCD);
+	cvReleaseImage(&imageDesiredCurrent);
 }
 
 

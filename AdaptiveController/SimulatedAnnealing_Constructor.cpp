@@ -19,14 +19,9 @@ SimulatedAnnealing::SimulatedAnnealing(SLM *slm, CCD *ccd, ImageProcessing *IP, 
 
 	includeIP(IP);
 
-	getImageCurrent();
-
-	ccd->snapShot();
-	ccd->showImageCCD();
+	createImageCCD();
 
 	setRangePM();
-
-	createWindow();
 
 	setSeedRand();
 }
@@ -61,9 +56,9 @@ void SimulatedAnnealing::includeIP(ImageProcessing *IP)
 
 
 
-void SimulatedAnnealing::getImageCurrent()
+void SimulatedAnnealing::createImageCCD()
 {
-	imageCurrent = ccd->getImageCCD();
+	imageCCD = ccd->createImageCopy();
 }
 
 
@@ -71,13 +66,6 @@ void SimulatedAnnealing::getImageCurrent()
 void SimulatedAnnealing::setRangePM()
 {
 	slm->getRangePM(heightPM, widthPM);
-}
-
-
-
-void SimulatedAnnealing::createWindow()
-{
-	cvNamedWindow("Image_Ideal");
 }
 
 

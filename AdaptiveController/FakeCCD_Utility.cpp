@@ -11,7 +11,7 @@
 
 
 
-void FakeCCD::eventProcessing()
+void FakeCCD::runEventProcessing()
 {
 	while(PeekMessage(&message, 0, 0, 0, PM_REMOVE))
 	{

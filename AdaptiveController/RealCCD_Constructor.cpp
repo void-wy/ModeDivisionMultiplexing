@@ -15,8 +15,6 @@ RealCCD::RealCCD(std::string name, std::string path)
 {
 	openFileLog(name, path);
 
-	createWindow();
-
 	createImageCCD();
 
 	createImageDesired();
@@ -35,13 +33,6 @@ void RealCCD::openFileLog(std::string name, std::string path)
 	fileLog->open(path.c_str());
 
 	fileLog->precision(10);
-}
-
-
-
-void RealCCD::createWindow()
-{
-	cvNamedWindow("Image_CCD");
 }
 
 

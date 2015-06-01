@@ -13,7 +13,7 @@
 
 SLM::~SLM()
 {
-	destroyWindow();
+	destroyWindowSLM();
 
 	releaseImage();
 
@@ -22,12 +22,9 @@ SLM::~SLM()
 
 
 
-void SLM::destroyWindow()
+void SLM::destroyWindowSLM()
 {
-	cvWaitKey(0);
-
 	cvDestroyWindow("Image_SLM");
-	cvDestroyWindow("Image_Visible");
 }
 
 
