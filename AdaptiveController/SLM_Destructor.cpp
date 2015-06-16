@@ -13,27 +13,53 @@
 
 SLM::~SLM()
 {
-	destroyWindowSLM();
-
 	releaseImage();
+
+	finalizeSLM();
 
 	closeFileLog();
 }
 
 
 
-void SLM::destroyWindowSLM()
+void SLM::releaseImage(int flag)
 {
-	cvDestroyWindow("Image_SLM");
+	switch(flag)
+	{
+	case AC_IMAGE_ALL:
+		{
+			cvReleaseImage(&imageVisible);
+			cvReleaseImage(&imageDesired);
+		}
+
+		break;
+
+	case AC_IMAGE_VISIBLE:
+		{
+			cvReleaseImage(&imageVisible);
+		}
+
+		break;
+
+	case AC_IMAGE_DESIRED:
+		{
+			cvReleaseImage(&imageDesired);
+		}
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 
 
-void SLM::releaseImage()
+void SLM::finalizeSLM()
 {
+	cvDestroyWindow("Image_SLM");
+
 	cvReleaseImage(&imageSLM);
-	cvReleaseImage(&imageVisible);
-	cvReleaseImage(&imageDesired);
 }
 
 

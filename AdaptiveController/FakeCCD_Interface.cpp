@@ -103,7 +103,7 @@ void FakeCCD::snapShot(IplImage *imageCopy)
 
 
 
-void FakeCCD::showImageCCD()
+void FakeCCD::showImage()
 {
 	cvShowImage("Image_CCD", imageCCD);
 

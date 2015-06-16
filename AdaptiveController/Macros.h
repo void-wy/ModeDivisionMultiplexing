@@ -5,60 +5,23 @@
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#include "FakeCCD.h"
+#define WINVER	0x0500
 
 
 
+#define AC_IMAGE_ALL	0
 
+#define AC_IMAGE_SLM	1
 
-FakeCCD::~FakeCCD()
-{
-	releaseImage();
+#define AC_IMAGE_VISIBLE	2
 
-	closeFileLog();
-}
+#define AC_IMAGE_CCD	4
 
+#define AC_IMAGE_CURRENT	8
 
+#define AC_IMAGE_IDEAL	16
 
-void FakeCCD::releaseImage(int flag)
-{
-	switch(flag)
-	{
-	case AC_IMAGE_ALL:
-		{
-			cvReleaseImage(&imageCCD);
-			cvReleaseImage(&imageDesired);
-		}
-
-		break;
-
-	case AC_IMAGE_CCD:
-		{
-			cvReleaseImage(&imageCCD);
-		}
-
-		break;
-
-	case AC_IMAGE_DESIRED:
-		{
-			cvReleaseImage(&imageDesired);
-		}
-
-		break;
-
-	default:
-		break;
-	}
-}
-
-
-
-void FakeCCD::closeFileLog()
-{
-	fileLog->close();
-
-	delete fileLog;
-}
+#define AC_IMAGE_DESIRED	32
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////

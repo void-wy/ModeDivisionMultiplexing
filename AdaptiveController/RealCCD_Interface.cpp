@@ -101,7 +101,7 @@ void RealCCD::snapShot(IplImage *imageCopy)
 
 
 
-void RealCCD::showImageCCD()
+void RealCCD::showImage()
 {
 	cvShowImage("Image_CCD", imageCCD);
 

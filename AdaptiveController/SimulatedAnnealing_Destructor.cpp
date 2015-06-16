@@ -13,21 +13,16 @@
 
 SimulatedAnnealing::~SimulatedAnnealing()
 {
-	releaseImage();
+	finalizeCCD();
 
 	closeFileLog();
 }
 
 
 
-void SimulatedAnnealing::releaseImage()
+void SimulatedAnnealing::finalizeCCD()
 {
 	ccd->releaseImageCopy(imageCCD);
-
-	cvReleaseImage(&imageCurrent);
-	cvReleaseImage(&imageIdeal);
-	cvReleaseImage(&imageDesiredCCD);
-	cvReleaseImage(&imageDesiredCurrent);
 }
 
 

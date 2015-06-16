@@ -185,7 +185,7 @@ void ImageProcessing::setNormalization(IplImage *image, int maxValueIdeal, int m
 		}
 	}
 
-	int range = maxValueCurrent - minValueCurrent;
+	double range = maxValueCurrent - minValueCurrent;
 
 	if(0 == range)
 	{

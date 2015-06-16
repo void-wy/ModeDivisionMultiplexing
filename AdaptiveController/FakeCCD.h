@@ -5,6 +5,15 @@
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef MACROS_H
+#define MACROS_H
+
+#include "Macros.h"
+
+#endif
+
+
+
 #ifndef CCD_H
 #define CCD_H
 
@@ -83,9 +92,7 @@ private:
 
 	void initializeData();
 
-	void createImageCCD();
-
-	void createImageDesired();
+	void createImage(int flag = AC_IMAGE_ALL);
 
 
 
@@ -115,7 +122,7 @@ public:
 	void snapShot(IplImage *imageCopy);
 
 public:
-	void showImageCCD();
+	void showImage();
 
 public:
 	void updateImageDesired();
@@ -142,7 +149,7 @@ public:
 	~FakeCCD();
 
 private:
-	void releaseImage();
+	void releaseImage(int flag = AC_IMAGE_ALL);
 
 	void closeFileLog();
 };

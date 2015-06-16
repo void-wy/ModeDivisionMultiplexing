@@ -2,3 +2,5 @@ leftSpot : 43
 bottomSpot : 189
 heightSpot : 73
 widthSpot : 67
+maxIdeal : 254
+minIdeal : 1

@@ -114,6 +114,40 @@ void SLM::setPhase(std::string name, std::string path)
 
 
 
+void SLM::setPhase(IplImage *imageCopy)
+{
+	int i, j;
+
+	for(i = 0; i < imageSLM->height; i++)
+	{
+		for(j = 0; j < imageSLM->width; j++)
+		{
+			((uchar *)imageSLM->imageData)[i * imageSLM->widthStep + j] =
+				((uchar *)imageCopy->imageData)[i * imageCopy->widthStep + j];
+		}
+	}
+
+	for(i = 0; i < imageVisible->height; i++)
+	{
+		for(j = 0; j < imageVisible->width; j++)
+		{
+			((uchar *)imageVisible->imageData)[i * imageVisible->widthStep + j] =
+				((uchar *)imageSLM->imageData)[(bottomPM + i) * imageSLM->widthStep + leftPM + j];
+		}
+	}
+
+	for(i = 0; i < imageDesired->height; i++)
+	{
+		for(j = 0; j < imageDesired->width; j++)
+		{
+			((uchar *)imageDesired->imageData)[i * imageDesired->widthStep + j] =
+				((uchar *)imageSLM->imageData)[i * imageSLM->widthStep + j];
+		}
+	}
+}
+
+
+
 void SLM::setPhase(int x, int y, int value, int height, int width)
 {
 	for(int i = x; i < x + height; i++)
@@ -137,7 +171,7 @@ void SLM::loadPhase()
 
 
 
-void SLM::showImageVisible()
+void SLM::showImage()
 {
 	cvShowImage("Image_Visible", imageVisible);
 

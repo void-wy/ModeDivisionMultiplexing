@@ -32,7 +32,7 @@ void main()
 
 	slm->createWindow();
 
-	SA->createWindow();
+	SA->createWindow(AC_IMAGE_CURRENT);
 
 
 
@@ -40,7 +40,7 @@ void main()
 
 	SA->setModeIdeal(15, "11a");
 
-	SA->createImageSA();
+	SA->createImage();
 
 	SA->setPhaseInitial("01-11a");
 
@@ -54,13 +54,15 @@ void main()
 
 	SA->saveImageResult();
 
+	SA->releaseImage();
+
 	SA->saveFileResult();
 
 	SA->closeFileSA();
 
 
 
-	SA->destroyWindow();
+	SA->destroyWindow(AC_IMAGE_CURRENT);
 
 	slm->destroyWindow();
 

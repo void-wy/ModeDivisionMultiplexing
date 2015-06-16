@@ -33,10 +33,35 @@ void RealCCD::finalizeICC()
 
 
 
-void RealCCD::releaseImage()
+void RealCCD::releaseImage(int flag)
 {
-	cvReleaseImage(&imageCCD);
-	cvReleaseImage(&imageDesired);
+	switch(flag)
+	{
+	case AC_IMAGE_ALL:
+		{
+			cvReleaseImage(&imageCCD);
+			cvReleaseImage(&imageDesired);
+		}
+
+		break;
+
+	case AC_IMAGE_CCD:
+		{
+			cvReleaseImage(&imageCCD);
+		}
+
+		break;
+
+	case AC_IMAGE_DESIRED:
+		{
+			cvReleaseImage(&imageDesired);
+		}
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 

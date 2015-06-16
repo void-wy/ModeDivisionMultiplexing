@@ -19,7 +19,7 @@ SimulatedAnnealing::SimulatedAnnealing(SLM *slm, CCD *ccd, ImageProcessing *IP, 
 
 	includeIP(IP);
 
-	createImageCCD();
+	initializeCCD();
 
 	setRangePM();
 
@@ -56,7 +56,7 @@ void SimulatedAnnealing::includeIP(ImageProcessing *IP)
 
 
 
-void SimulatedAnnealing::createImageCCD()
+void SimulatedAnnealing::initializeCCD()
 {
 	imageCCD = ccd->createImageCopy();
 }

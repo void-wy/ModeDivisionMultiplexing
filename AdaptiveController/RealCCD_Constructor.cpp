@@ -15,9 +15,7 @@ RealCCD::RealCCD(std::string name, std::string path)
 {
 	openFileLog(name, path);
 
-	createImageCCD();
-
-	createImageDesired();
+	createImage();
 
 	initializeICC();
 }
@@ -37,16 +35,36 @@ void RealCCD::openFileLog(std::string name, std::string path)
 
 
 
-void RealCCD::createImageCCD()
+void RealCCD::createImage(int flag)
 {
-	imageCCD = cvCreateImageHeader(cvSize(768, 576), IPL_DEPTH_8U, 1);
-}
+	switch(flag)
+	{
+	case AC_IMAGE_ALL:
+		{
+			imageCCD = cvCreateImageHeader(cvSize(768, 576), IPL_DEPTH_8U, 1);
 
+			imageDesired = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+		}
 
+		break;
 
-void RealCCD::createImageDesired()
-{
-	imageDesired = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+	case AC_IMAGE_CCD:
+		{
+			imageCCD = cvCreateImageHeader(cvSize(768, 576), IPL_DEPTH_8U, 1);
+		}
+
+		break;
+
+	case AC_IMAGE_DESIRED:
+		{
+			imageDesired = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+		}
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 

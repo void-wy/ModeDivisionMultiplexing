@@ -5,10 +5,10 @@
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef WINVER_M
-#define WINVER_M
+#ifndef MACROS_H
+#define MACROS_H
 
-#define WINVER	0x0500
+#include "Macros.h"
 
 #endif
 
@@ -82,15 +82,11 @@ public:
 private:
 	void openFileLog(std::string name = "SLM_File_Log", std::string path = "Log");
 
-	void createWindowSLM();
-
-	void createImageSLM();
+	void initializeSLM();
 
 	void setRangePM(int height, int width);
 
-	void createImageVisible();
-
-	void createImageDesired();
+	void createImage(int flag = AC_IMAGE_ALL);
 
 	void initializePhase();
 
@@ -128,13 +124,16 @@ public:
 	void setPhase(std::string name = "Blank", std::string path = "Phase");
 
 public:
+	void setPhase(IplImage *imageCopy);
+
+public:
 	void setPhase(int x, int y, int value, int height = 1, int width = 1);
 
 public:
 	void loadPhase();
 
 public:
-	void showImageVisible();
+	void showImage();
 
 public:
 	void updateImageDesired();
@@ -161,9 +160,9 @@ public:
 	~SLM();
 
 private:
-	void destroyWindowSLM();
+	void releaseImage(int flag = AC_IMAGE_ALL);
 
-	void releaseImage();
+	void finalizeSLM();
 
 	void closeFileLog();
 };

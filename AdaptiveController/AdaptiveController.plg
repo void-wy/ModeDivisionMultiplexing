@@ -6,13 +6,13 @@
 --------------------Configuration: AdaptiveController - Win32 Debug--------------------
 </h3>
 <h3>Command Lines</h3>
-Creating temporary file "C:\Users\wy\AppData\Local\Temp\RSP3033.tmp" with contents
+Creating temporary file "C:\Users\wy\AppData\Local\Temp\RSP445A.tmp" with contents
 [
 /nologo /MLd /W3 /Gm /GX /ZI /Od /I "ICC" /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /Fp"Debug/AdaptiveController.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
-"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\ImageProcessing_Interface.cpp"
+"D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\AdaptiveController.cpp"
 ]
-Creating command line "cl.exe @C:\Users\wy\AppData\Local\Temp\RSP3033.tmp" 
-Creating temporary file "C:\Users\wy\AppData\Local\Temp\RSP3034.tmp" with contents
+Creating command line "cl.exe @C:\Users\wy\AppData\Local\Temp\RSP445A.tmp" 
+Creating temporary file "C:\Users\wy\AppData\Local\Temp\RSP445B.tmp" with contents
 [
 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib cxcore.lib cv.lib ml.lib cvaux.lib highgui.lib cvcam.lib CGVideo.lib CGVidEx.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/AdaptiveController.pdb" /debug /machine:I386 /out:"Debug/AdaptiveController.exe" /pdbtype:sept /libpath:"ICC" 
 .\Debug\AdaptiveController.obj
@@ -38,11 +38,10 @@ kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32
 .\Debug\SLM_Utility.obj
 .\Debug\Test.obj
 ]
-Creating command line "link.exe @C:\Users\wy\AppData\Local\Temp\RSP3034.tmp"
+Creating command line "link.exe @C:\Users\wy\AppData\Local\Temp\RSP445B.tmp"
 <h3>Output Window</h3>
 Compiling...
-ImageProcessing_Interface.cpp
-D:\GitHub\ModeDivisionMultiplexing\AdaptiveController\ImageProcessing_Interface.cpp(202) : warning C4244: '=' : conversion from 'double' to 'unsigned char', possible loss of data
+AdaptiveController.cpp
 Linking...
 
 

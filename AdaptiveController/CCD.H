@@ -52,7 +52,7 @@ public:
 	virtual void snapShot(IplImage *imageCopy) = 0;
 
 public:
-	virtual void showImageCCD() = 0;
+	virtual void showImage() = 0;
 
 public:
 	virtual void updateImageDesired() = 0;

@@ -15,15 +15,11 @@ SLM::SLM(int height, int width, std::string name, std::string path)
 {
 	openFileLog(name, path);
 
-	createWindowSLM();
-
-	createImageSLM();
+	initializeSLM();
 
 	setRangePM(height, width);
 
-	createImageVisible();
-
-	createImageDesired();
+	createImage();
 
 	initializePhase();
 }
@@ -43,15 +39,10 @@ void SLM::openFileLog(std::string name, std::string path)
 
 
 
-void SLM::createWindowSLM()
+void SLM::initializeSLM()
 {
 	cvNamedWindow("Image_SLM", 0);
-}
 
-
-
-void SLM::createImageSLM()
-{
 	EnumDisplayMonitors(NULL, NULL, MonitorEnumProc, (LPARAM)this);
 }
 
@@ -72,16 +63,35 @@ void SLM::setRangePM(int height, int width)
 
 
 
-void SLM::createImageVisible()
+void SLM::createImage(int flag)
 {
-	imageVisible = cvCreateImage(cvSize(widthPM, heightPM), IPL_DEPTH_8U, 1);
-}
+	switch(flag)
+	{
+	case AC_IMAGE_ALL:
+		{
+			imageVisible = cvCreateImage(cvSize(widthPM, heightPM), IPL_DEPTH_8U, 1);
+			imageDesired = cvCreateImage(cvGetSize(imageSLM), IPL_DEPTH_8U, 1);
+		}
 
+		break;
 
+	case AC_IMAGE_VISIBLE:
+		{
+			imageVisible = cvCreateImage(cvSize(widthPM, heightPM), IPL_DEPTH_8U, 1);
+		}
 
-void SLM::createImageDesired()
-{
-	imageDesired = cvCreateImage(cvGetSize(imageSLM), IPL_DEPTH_8U, 1);
+		break;
+
+	case AC_IMAGE_DESIRED:
+		{
+			imageDesired = cvCreateImage(cvGetSize(imageSLM), IPL_DEPTH_8U, 1);
+		}
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 
@@ -91,8 +101,6 @@ void SLM::initializePhase()
 	setPhase();
 
 	loadPhase();
-
-	showImageVisible();
 }
 
 

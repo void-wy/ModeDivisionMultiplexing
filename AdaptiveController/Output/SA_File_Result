@@ -1,10 +1,10 @@
-Ts : 5987369.392
+Ts : 9500000
 Tt : 100
 c : 0.95
 cyc : 100
 BoltzmannConstant : 1.3806488e-023
-TN : 	1000
-DRN : 	3
-PRN : 	99
-CorrelationBest : 	0.7286877458
-Duration : 	26.037
+TN : 	100
+DRN : 	2
+PRN : 	9
+CorrelationBest : 	0.7532937521
+Duration : 	2.979

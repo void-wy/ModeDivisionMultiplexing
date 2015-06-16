@@ -11,20 +11,84 @@
 
 
 
-void SimulatedAnnealing::createWindow()
+void SimulatedAnnealing::createWindow(int flag)
 {
-	cvNamedWindow("Image_CCD");
-	cvNamedWindow("Image_Current");
-	cvNamedWindow("Image_Ideal");
+	switch(flag)
+	{
+	case AC_IMAGE_ALL:
+		{
+			cvNamedWindow("Image_CCD");
+			cvNamedWindow("Image_Current");
+			cvNamedWindow("Image_Ideal");
+		}
+
+		break;
+
+	case AC_IMAGE_CCD:
+		{
+			cvNamedWindow("Image_CCD");
+		}
+
+		break;
+
+	case AC_IMAGE_CURRENT:
+		{
+			cvNamedWindow("Image_Current");
+		}
+
+		break;
+
+	case AC_IMAGE_IDEAL:
+		{
+			cvNamedWindow("Image_Ideal");
+		}
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 
 
-void SimulatedAnnealing::destroyWindow()
+void SimulatedAnnealing::destroyWindow(int flag)
 {
-	cvDestroyWindow("Image_CCD");
-	cvDestroyWindow("Image_Current");
-	cvDestroyWindow("Image_Ideal");
+	switch(flag)
+	{
+	case AC_IMAGE_ALL:
+		{
+			cvDestroyWindow("Image_CCD");
+			cvDestroyWindow("Image_Current");
+			cvDestroyWindow("Image_Ideal");
+		}
+
+		break;
+
+	case AC_IMAGE_CCD:
+		{
+			cvDestroyWindow("Image_CCD");
+		}
+
+		break;
+
+	case AC_IMAGE_CURRENT:
+		{
+			cvDestroyWindow("Image_Current");
+		}
+
+		break;
+
+	case AC_IMAGE_IDEAL:
+		{
+			cvDestroyWindow("Image_Ideal");
+		}
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 
@@ -61,18 +125,94 @@ void SimulatedAnnealing::setModeIdeal(int margin, std::string name, std::string 
 {
 	setRangeSpot(margin);
 
-	createImageIdeal(margin, name, path);
+	setImageIdeal(margin, name, path);
 
-	showImageIdeal();
+	normalizeImageIdeal();
 }
 
 
 
-void SimulatedAnnealing::createImageSA()
+void SimulatedAnnealing::createImage(int flag)
 {
-	createImageCurrent();
+	switch(flag)
+	{
+	case AC_IMAGE_IDEAL:
+		{
+			imageIdeal = cvCreateImage(cvSize(widthSpot, heightSpot), IPL_DEPTH_8U, 1);
+		}
 
-	createImageDesired();
+		break;
+
+	case AC_IMAGE_ALL:
+		{
+			imageCurrent = cvCreateImage(cvSize(widthSpot, heightSpot), IPL_DEPTH_8U, 1);
+			imageDesiredCCD = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+			imageDesiredCurrent = cvCreateImage(cvGetSize(imageCurrent), IPL_DEPTH_8U, 1);
+		}
+
+		break;
+
+	case AC_IMAGE_CURRENT:
+		{
+			imageCurrent = cvCreateImage(cvSize(widthSpot, heightSpot), IPL_DEPTH_8U, 1);
+		}
+
+		break;
+
+	case AC_IMAGE_DESIRED:
+		{
+			imageDesiredCCD = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+			imageDesiredCurrent = cvCreateImage(cvGetSize(imageCurrent), IPL_DEPTH_8U, 1);
+		}
+
+		break;
+
+	default:
+		break;
+	}
+}
+
+
+
+void SimulatedAnnealing::releaseImage(int flag)
+{
+	switch(flag)
+	{
+	case AC_IMAGE_ALL:
+		{
+			cvReleaseImage(&imageIdeal);
+			cvReleaseImage(&imageCurrent);
+			cvReleaseImage(&imageDesiredCCD);
+			cvReleaseImage(&imageDesiredCurrent);
+		}
+
+		break;
+
+	case AC_IMAGE_IDEAL:
+		{
+			cvReleaseImage(&imageIdeal);
+		}
+
+		break;
+
+	case AC_IMAGE_CURRENT:
+		{
+			cvReleaseImage(&imageCurrent);
+		}
+
+		break;
+
+	case AC_IMAGE_DESIRED:
+		{
+			cvReleaseImage(&imageDesiredCCD);
+			cvReleaseImage(&imageDesiredCurrent);
+		}
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 
@@ -124,9 +264,6 @@ void SimulatedAnnealing::updateImageCurrent()
 			((uchar *)imageCurrent->imageData)[i * imageCurrent->widthStep + j] = sort[4];
 		}
 	}
-
-	//	Normalization
-	IP->setNormalization(imageCurrent);
 }
 
 
@@ -156,20 +293,51 @@ void SimulatedAnnealing::updateImageDesired()
 
 
 
-void SimulatedAnnealing::showImageCCD()
+void SimulatedAnnealing::showImage(int flag)
 {
-	cvShowImage("Image_CCD", imageCCD);
+	switch(flag)
+	{
+	case AC_IMAGE_ALL:
+		{
+			cvShowImage("Image_CCD", imageCCD);
+			cvShowImage("Image_Current", imageCurrent);
+			cvShowImage("Image_Ideal", imageIdeal);
 
-	runEventProcessing();
-}
+			runEventProcessing();
+		}
 
+		break;
 
+	case AC_IMAGE_CCD:
+		{
+			cvShowImage("Image_CCD", imageCCD);
 
-void SimulatedAnnealing::showImageCurrent()
-{
-	cvShowImage("Image_Current", imageCurrent);
+			runEventProcessing();
+		}
 
-	runEventProcessing();
+		break;
+
+	case AC_IMAGE_CURRENT:
+		{
+			cvShowImage("Image_Current", imageCurrent);
+
+			runEventProcessing();
+		}
+
+		break;
+
+	case AC_IMAGE_IDEAL:
+		{
+			cvShowImage("Image_Ideal", imageIdeal);
+
+			runEventProcessing();
+		}
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 
@@ -199,8 +367,6 @@ void SimulatedAnnealing::setPhaseInitial(std::string name, std::string path)
 	slm->setPhase(name, path);
 
 	slm->loadPhase();
-
-	slm->showImageVisible();
 }
 
 
@@ -231,9 +397,7 @@ void SimulatedAnnealing::runSA(int height, int width)
 
 	snapShot();
 
-	showImageCCD();
-
-	showImageCurrent();
+	showImage(AC_IMAGE_CURRENT);
 
 	updateImageDesired();
 
@@ -258,19 +422,25 @@ void SimulatedAnnealing::runSA(int height, int width)
 
 					*fileProcess << "Correlation : \t" << correlationBest << std::endl;
 
-					showImageCCD();
-
-					showImageCurrent();
+					showImage(AC_IMAGE_CURRENT);
 
 					updateImageDesired();
 				}
 
-				if(0 == TN % 1000)
+				if(0 == TN % 100)
 				{
+					createWindow(AC_IMAGE_IDEAL);
+
+					showImage(AC_IMAGE_IDEAL);
+
 					if(27 == cvWaitKey(0))
 					{
+						destroyWindow(AC_IMAGE_IDEAL);
+
 						return;
 					}
+
+					destroyWindow(AC_IMAGE_IDEAL);
 				}
 
 				snapShot();
@@ -286,7 +456,7 @@ void SimulatedAnnealing::runSA(int height, int width)
 
 					if(correlation > correlationBest)
 					{
-						slm->showImageVisible();
+						slm->showImage();
 
 						slm->updateImageDesired();
 					}

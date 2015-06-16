@@ -5,6 +5,15 @@
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef MACROS_H
+#define MACROS_H
+
+#include "Macros.h"
+
+#endif
+
+
+
 #ifndef CCD_H
 #define CCD_H
 
@@ -91,9 +100,7 @@ public:
 private:
 	void openFileLog(std::string name = "CCD_File_Log", std::string path = "Log");
 
-	void createImageCCD();
-
-	void createImageDesired();
+	void createImage(int flag = AC_IMAGE_ALL);
 
 	void initializeICC();
 
@@ -125,7 +132,7 @@ public:
 	void snapShot(IplImage *imageCopy);
 
 public:
-	void showImageCCD();
+	void showImage();
 
 public:
 	void updateImageDesired();
@@ -154,7 +161,7 @@ public:
 private:
 	void finalizeICC();
 
-	void releaseImage();
+	void releaseImage(int flag = AC_IMAGE_ALL);
 
 	void closeFileLog();
 };

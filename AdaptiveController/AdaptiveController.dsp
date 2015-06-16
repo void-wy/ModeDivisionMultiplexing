@@ -191,6 +191,10 @@ SOURCE=.\ImageProcessing.h
 # End Source File
 # Begin Source File
 
+SOURCE=.\Macros.h
+# End Source File
+# Begin Source File
+
 SOURCE=.\RealCCD.h
 # End Source File
 # Begin Source File

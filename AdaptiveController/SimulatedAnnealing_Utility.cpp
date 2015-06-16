@@ -32,7 +32,7 @@ void SimulatedAnnealing::setRangeSpot(int margin)
 
 
 
-void SimulatedAnnealing::createImageIdeal(int margin, std::string name, std::string path)
+void SimulatedAnnealing::setImageIdeal(int margin, std::string name, std::string path)
 {
 	int left, right, top, bottom;
 
@@ -51,7 +51,7 @@ void SimulatedAnnealing::createImageIdeal(int margin, std::string name, std::str
 
 	IP->findContour(imageOriginalResize, left, right, top, bottom);
 
-	imageIdeal = cvCreateImage(cvSize(widthSpot, heightSpot), IPL_DEPTH_8U, 1);
+	createImage(AC_IMAGE_IDEAL);
 
 	for(int i = 0; i < imageIdeal->height; i++)
 	{
@@ -63,32 +63,19 @@ void SimulatedAnnealing::createImageIdeal(int margin, std::string name, std::str
 
 	cvReleaseImage(&imageOriginalIdeal);
 	cvReleaseImage(&imageOriginalResize);
-
-	IP->setNormalization(imageIdeal);
 }
 
 
 
-void SimulatedAnnealing::showImageIdeal()
+void SimulatedAnnealing::normalizeImageIdeal()
 {
-	cvShowImage("Image_Ideal", imageIdeal);
+	int max = IP->getMaxValue(imageCCD);
+	int min = IP->getMinValue(imageCCD);
 
-	runEventProcessing();
-}
+	IP->setNormalization(imageIdeal, max, min);
 
-
-
-void SimulatedAnnealing::createImageCurrent()
-{
-	imageCurrent = cvCreateImage(cvSize(widthSpot, heightSpot), IPL_DEPTH_8U, 1);
-}
-
-
-
-void SimulatedAnnealing::createImageDesired()
-{
-	imageDesiredCCD = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
-	imageDesiredCurrent = cvCreateImage(cvGetSize(imageCurrent), IPL_DEPTH_8U, 1);
+	*fileLog << "maxIdeal : " << max << std::endl;
+	*fileLog << "minIdeal : " << min << std::endl;
 }
 
 

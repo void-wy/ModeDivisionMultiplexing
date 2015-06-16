@@ -5,6 +5,15 @@
  */
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
+#ifndef MACROS_H
+#define MACROS_H
+
+#include "Macros.h"
+
+#endif
+
+
+
 #ifndef SLM_H
 #define SLM_H
 
@@ -136,7 +145,7 @@ private:
 
 	void includeIP(ImageProcessing *IP);
 
-	void createImageCCD();
+	void initializeCCD();
 
 	void setRangePM();
 
@@ -149,10 +158,10 @@ private:
  */
 
 public:
-	void createWindow();
+	void createWindow(int flag = AC_IMAGE_ALL);
 
 public:
-	void destroyWindow();
+	void destroyWindow(int flag = AC_IMAGE_ALL);
 
 public:
 	void openFileSA(std::string nameProcess = "SA_File_Process", std::string nameResult = "SA_File_Result", std::string path = "Output");
@@ -164,7 +173,10 @@ public:
 	void setModeIdeal(int margin, std::string name, std::string path = "LP");
 
 public:
-	void createImageSA();
+	void createImage(int flag = AC_IMAGE_ALL);
+
+public:
+	void releaseImage(int flag = AC_IMAGE_ALL);
 
 public:
 	void updateImageCurrent();
@@ -173,10 +185,7 @@ public:
 	void updateImageDesired();
 
 public:
-	void showImageCCD();
-
-public:
-	void showImageCurrent();
+	void showImage(int flag = AC_IMAGE_ALL);
 
 public:
 	void saveImageIdeal(std::string name = "SA_Image_Ideal", std::string path = "Output");
@@ -218,13 +227,9 @@ public:
 private:
 	void setRangeSpot(int margin);
 
-	void createImageIdeal(int margin, std::string name, std::string path = "LP");
+	void setImageIdeal(int margin, std::string name, std::string path = "LP");
 
-	void showImageIdeal();
-
-	void createImageCurrent();
-
-	void createImageDesired();
+	void normalizeImageIdeal();
 
 private:
 	void runEventProcessing();
@@ -239,7 +244,7 @@ public:
 	~SimulatedAnnealing();
 
 private:
-	void releaseImage();
+	void finalizeCCD();
 
 	void closeFileLog();
 };

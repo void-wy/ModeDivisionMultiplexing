@@ -17,9 +17,7 @@ FakeCCD::FakeCCD(std::string name, std::string path)
 
 	initializeData();
 
-	createImageCCD();
-
-	createImageDesired();
+	createImage();
 }
 
 
@@ -47,18 +45,40 @@ void FakeCCD::initializeData()
 
 
 
-void FakeCCD::createImageCCD()
+void FakeCCD::createImage(int flag)
 {
-	std::string path = directory + "\\" + name + ".bmp";
+	switch(flag)
+	{
+	case AC_IMAGE_ALL:
+		{
+			std::string path = directory + "\\" + name + ".bmp";
 
-	imageCCD = cvLoadImage(path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
-}
+			imageCCD = cvLoadImage(path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
 
+			imageDesired = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+		}
 
+		break;
 
-void FakeCCD::createImageDesired()
-{
-	imageDesired = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+	case AC_IMAGE_CCD:
+		{
+			std::string path = directory + "\\" + name + ".bmp";
+
+			imageCCD = cvLoadImage(path.c_str(), CV_LOAD_IMAGE_GRAYSCALE);
+		}
+
+		break;
+
+	case AC_IMAGE_DESIRED:
+		{
+			imageDesired = cvCreateImage(cvGetSize(imageCCD), IPL_DEPTH_8U, 1);
+		}
+
+		break;
+
+	default:
+		break;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
